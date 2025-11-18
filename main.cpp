@@ -1,6 +1,8 @@
 #define GL_SILENCE_DEPRECATION
 
 #include <GLUT/glut.h>
+#include <stdlib.h>
+
 GLint windowWidth = 1000;
 GLint windowHeight = 800;
 
@@ -10,17 +12,22 @@ GLint stackCount = 60;
 
 /*
     define a original point with a white ball, x y z colored debug lines
-
 */
-
+void myKeyboard(unsigned char key, int x, int y){
+    if(key == 'q'){
+        exit(0);
+    }
+    
+}
 void drawOriginDebugger(){
     // draw white sphere
     //void gluSphere(GLUquadric *quad, GLdouble radius, GLint slices, GLint stacks)
     glColor3f(1, 1, 1);
-    gluSphere(quad, 5, sliceCount, stackCount);
+    gluSphere(quad, 0.5, sliceCount, stackCount);
     
     // x debugger
     glColor3f(1, 0, 0);
+    glLineWidth(5.0);
     glBegin(GL_LINES);
         glVertex3f(0, 0, 0);
         glVertex3f(20, 0 ,0);
@@ -74,6 +81,7 @@ int main(int argc, char** argv){
     // change into model-view so that we can change the object positions
     glMatrixMode(GL_MODELVIEW);
     glutDisplayFunc(myDisplay);
+    glutKeyboardFunc(myKeyboard);
     glutMainLoop();
     return 1;
 }
