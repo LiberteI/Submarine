@@ -13,6 +13,10 @@ GLint stackCount = 60;
 
 GLint uPressedTimes = 0;
 
+GLint fPressedTimes = 0;
+
+GLint windowXPos = 0;
+GLint windowYPos = 0;
 /*
     define a original point with a white ball, x y z colored debug lines
 */
@@ -27,6 +31,19 @@ void trySwitchPolygonMode(){
         printf("wireframe rendering\n");
     }
 }
+
+void tryResizeWindow(){
+    if(fPressedTimes % 2 == 0){
+        // normal
+        glutReshapeWindow(windowWidth, windowHeight);
+        glutPositionWindow(windowXPos, windowYPos);
+    }
+    else{
+        // full screen
+        glutFullScreen();
+    }
+}
+
 void myKeyboardDown(unsigned char key, int x, int y){
     if(key == 'q'){
         // quit app
@@ -36,11 +53,16 @@ void myKeyboardDown(unsigned char key, int x, int y){
         uPressedTimes ++;
         trySwitchPolygonMode();
     }
+    if(key == 'f'){
+        fPressedTimes ++;
+        tryResizeWindow();
+    }
     
 }
 void myKeyboardUp(unsigned char key, int x, int y){
     
 }
+
 void drawOriginDebugger(){
     // draw white sphere
     //void gluSphere(GLUquadric *quad, GLdouble radius, GLint slices, GLint stacks)
@@ -83,6 +105,11 @@ void myDisplay(){
 
     glutSwapBuffers();
 }
+
+void recordNormalWindow(){
+    windowXPos = glutGet(GLUT_WINDOW_X);
+    windowXPos = glutGet(GLUT_WINDOW_Y);
+}
 int main(int argc, char** argv){
     // intialise GLUT
     glutInit(&argc, argv);
@@ -91,6 +118,7 @@ int main(int argc, char** argv){
     // initialise window
     glutInitWindowSize(windowWidth, windowHeight);
     glutCreateWindow("SUBMARINE");
+    recordNormalWindow();
     // create quadric
     quad = gluNewQuadric();
     // enable depth testing
