@@ -101,23 +101,10 @@ void drawOriginDebugger(){
     glEnd();
 }
 
-void myDisplay(){
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glLoadIdentity();
-
-    gluLookAt(0, 20, 200,
-              0, 0, 0, 
-              0, 1, 0);
-
-    drawOriginDebugger();
-
-    glutSwapBuffers();
-}
 
 void recordNormalWindow(){
     windowXPos = glutGet(GLUT_WINDOW_X);
-    windowXPos = glutGet(GLUT_WINDOW_Y);
+    windowYPos = glutGet(GLUT_WINDOW_Y);
 }
 
 // load file -> read line by line -> ignore lines that do not start with g/v/vn/f -> store vertices -> store normals -> follow instr
@@ -143,7 +130,7 @@ void loadSubmarineFile(){
         curTokenizedLine >> identifer;
         
         // skip other lines
-        if(identifer != "v" || identifer != "vn"){
+        if(identifer != "v" && identifer != "vn"){
             continue;
         }
         GLfloat x, y, z;
@@ -160,7 +147,90 @@ void loadSubmarineFile(){
     }
 
     printf("finished loading!!!");
+    
 }
+
+// used for parsing tokens looking like "123//456". return an array{123, 456}
+std::array<GLint, 2> parseToken(std::string token){
+    std::array<GLint, 2> array;
+
+    int vertexIndex, normalIndex;
+
+    // find the first slash
+    size_t slash1 = token.find('/');
+    // find the second slash positioned right after slash1 (index based)
+    size_t slash2 = token.find('/', slash1 + 1);
+
+    // stoi: parse string to int
+    // find the number before the first slash  index: [0 - slash1)
+    vertexIndex = std::stoi(token.substr(0, slash1));
+
+    // find the number after the second slash [slash2 + 1 - end)
+    normalIndex = std::stoi(token.substr(slash2 + 1));
+
+    array[0] = vertexIndex;
+    array[1] = normalIndex;
+
+    return array;
+}
+
+void drawSubmarine(){
+    std::ifstream submarineObjFile("assets/submarine.obj");
+    if(!submarineObjFile.is_open()){
+        printf("cannot draw submarine because failure in opening submarine file");
+        return;
+    }
+
+    std::string currentLine;
+
+    glBegin(GL_TRIANGLES);
+    while(std::getline(submarineObjFile, currentLine)){
+        // we use an identifer to make operatios to the lines
+        std::string identifer;
+        std::stringstream tokenisedCurrentLine(currentLine);
+
+        tokenisedCurrentLine >> identifer;
+
+        // skip other lines except for f because we only need the instructions
+        if(identifer != "f"){
+            continue;
+        }
+        // token looks like : "123//456"
+        std::string token1, token2, token3;
+        tokenisedCurrentLine >> token1;
+        tokenisedCurrentLine >> token2;
+        tokenisedCurrentLine >> token3;
+
+        std::array<GLint, 2> parsedToken1 = parseToken(token1);
+        std::array<GLint, 2> parsedToken2 = parseToken(token2);
+        std::array<GLint, 2> parsedToken3 = parseToken(token3);
+        
+        
+        // glVertex3fv expects GLfloat*. use data() to parse array obj to it
+        glVertex3fv(submarineVertexList[parsedToken1[0]].data());
+        glVertex3fv(submarineVertexList[parsedToken2[0]].data());
+        glVertex3fv(submarineVertexList[parsedToken3[0]].data());
+        
+    }
+    glEnd();
+}
+
+void myDisplay(){
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glLoadIdentity();
+
+    gluLookAt(0, 20, 200,
+              0, 0, 0, 
+              0, 1, 0);
+
+    drawOriginDebugger();
+
+    drawSubmarine();
+
+    glutSwapBuffers();
+}
+
 
 int main(int argc, char** argv){
     // intialise GLUT
@@ -173,6 +243,7 @@ int main(int argc, char** argv){
     recordNormalWindow();
     // create quadric
     quad = gluNewQuadric();
+    loadSubmarineFile();
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
     // change into projection mode so that we can change the camera properties
@@ -185,8 +256,6 @@ int main(int argc, char** argv){
     glMatrixMode(GL_MODELVIEW);
     glutDisplayFunc(myDisplay);
     glutKeyboardFunc(myKeyboardDown);
-
-    loadSubmarineFile();
     glutMainLoop();
     return 1;
 }
