@@ -3,6 +3,11 @@
 #include <GLUT/glut.h>
 #include <stdlib.h>
 #include <cstdio>
+#include <vector>
+#include <fstream>
+#include <sstream>
+#include <array>
+#include <string>
 
 GLint windowWidth = 1000;
 GLint windowHeight = 800;
@@ -20,6 +25,9 @@ GLint windowYPos = 0;
 /*
     define a original point with a white ball, x y z colored debug lines
 */
+std::vector<std::array<GLfloat, 3>> submarineVertexList;
+std::vector<std::array<GLfloat, 3>> submarineNormalList;
+
 void trySwitchPolygonMode(){
     if(uPressedTimes % 2 == 0){
         // void glPolygonMode(GLenum face, GLenum mode) // fill/line/point
@@ -44,6 +52,7 @@ void tryResizeWindow(){
     }
 }
 
+// screen toggle / polygon mode toggle / quit button
 void myKeyboardDown(unsigned char key, int x, int y){
     if(key == 'q'){
         // quit app
@@ -110,6 +119,49 @@ void recordNormalWindow(){
     windowXPos = glutGet(GLUT_WINDOW_X);
     windowXPos = glutGet(GLUT_WINDOW_Y);
 }
+
+// load file -> read line by line -> ignore lines that do not start with g/v/vn/f -> store vertices -> store normals -> follow instr
+// note : just figured out the indices are cumulative.
+void loadSubmarineFile(){
+    // load submarine file
+    std::ifstream file("assets/submarine.obj");
+
+    // guard file
+    if(!file.is_open()){
+        printf("fail to open submarine file");
+        return;
+    }
+
+    std::string currentLine;
+    // read the next line and store it in "currentLine"
+    // currentLine: "v x y z"
+    while(std::getline(file, currentLine)){
+        // get current string stream version of currentLine, so that we can use >> effectively
+        std::stringstream curTokenizedLine(currentLine);
+        std::string identifer;
+
+        curTokenizedLine >> identifer;
+        
+        // skip other lines
+        if(identifer != "v" || identifer != "vn"){
+            continue;
+        }
+        GLfloat x, y, z;
+        curTokenizedLine >> x;
+        curTokenizedLine >> y;
+        curTokenizedLine >> z;
+        // add x,y,z to list accordingly
+        if(identifer == "v"){
+            submarineVertexList.push_back({x, y, z});
+        }
+        if(identifer == "vn"){
+            submarineNormalList.push_back({x, y, z});
+        }
+    }
+
+    printf("finished loading!!!");
+}
+
 int main(int argc, char** argv){
     // intialise GLUT
     glutInit(&argc, argv);
@@ -133,6 +185,8 @@ int main(int argc, char** argv){
     glMatrixMode(GL_MODELVIEW);
     glutDisplayFunc(myDisplay);
     glutKeyboardFunc(myKeyboardDown);
+
+    loadSubmarineFile();
     glutMainLoop();
     return 1;
 }

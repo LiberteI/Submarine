@@ -13,6 +13,9 @@ app
 *.o
 *.obj
 
+# assets
+/assets
+
 # Build directories
 build/
 bin/
