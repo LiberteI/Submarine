@@ -146,8 +146,6 @@ void loadSubmarineFile(){
         }
     }
 
-    printf("finished loading!!!");
-    
 }
 
 // used for parsing tokens looking like "123//456". return an array{123, 456}
@@ -207,9 +205,10 @@ void drawSubmarine(){
         
         
         // glVertex3fv expects GLfloat*. use data() to parse array obj to it
-        glVertex3fv(submarineVertexList[parsedToken1[0]].data());
-        glVertex3fv(submarineVertexList[parsedToken2[0]].data());
-        glVertex3fv(submarineVertexList[parsedToken3[0]].data());
+        glNormal3fv(submarineNormalList[parsedToken1[1] - 1].data());
+        glVertex3fv(submarineVertexList[parsedToken1[0] - 1].data());
+        glVertex3fv(submarineVertexList[parsedToken2[0] - 1].data());
+        glVertex3fv(submarineVertexList[parsedToken3[0] - 1].data());
         
     }
     glEnd();
