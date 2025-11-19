@@ -2,6 +2,7 @@
 
 #include <GLUT/glut.h>
 #include <stdlib.h>
+#include <cstdio>
 
 GLint windowWidth = 1000;
 GLint windowHeight = 800;
@@ -10,13 +11,34 @@ GLUquadric* quad;
 GLint sliceCount = 60;
 GLint stackCount = 60;
 
+GLint uPressedTimes = 0;
+
 /*
     define a original point with a white ball, x y z colored debug lines
 */
-void myKeyboard(unsigned char key, int x, int y){
+void trySwitchPolygonMode(){
+    if(uPressedTimes % 2 == 0){
+        // void glPolygonMode(GLenum face, GLenum mode) // fill/line/point
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        printf("solid rendering\n");
+    }
+    else{
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        printf("wireframe rendering\n");
+    }
+}
+void myKeyboardDown(unsigned char key, int x, int y){
     if(key == 'q'){
+        // quit app
         exit(0);
     }
+    if(key == 'u'){
+        uPressedTimes ++;
+        trySwitchPolygonMode();
+    }
+    
+}
+void myKeyboardUp(unsigned char key, int x, int y){
     
 }
 void drawOriginDebugger(){
@@ -56,6 +78,7 @@ void myDisplay(){
     gluLookAt(0, 20, 200,
               0, 0, 0, 
               0, 1, 0);
+
     drawOriginDebugger();
 
     glutSwapBuffers();
@@ -81,7 +104,7 @@ int main(int argc, char** argv){
     // change into model-view so that we can change the object positions
     glMatrixMode(GL_MODELVIEW);
     glutDisplayFunc(myDisplay);
-    glutKeyboardFunc(myKeyboard);
+    glutKeyboardFunc(myKeyboardDown);
     glutMainLoop();
     return 1;
 }
