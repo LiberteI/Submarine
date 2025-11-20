@@ -16,6 +16,9 @@ GLint windowYPos = 0;
 GLfloat speed = 0.5;
 std::array<GLfloat, 3> submarinCurrentPos = {0, 0, 0};
 
+GLfloat curMouseXPos;
+GLfloat curMouseYPos;
+
 bool upHeld = false;
 bool downHeld = false;
 
@@ -152,6 +155,21 @@ void specialKeyUp(int key, int, int){
     }
 }
 
-void myMousePassiveMotion(int, int){
+
+
+// mouse function : (x, y)
+// (0, 0)      ---> (width - 1, 0)
+
+// (0, height) ---> (width -1, height)
+/*
+    interpolate x, y for camera rotation.
+    x E [0, windowWidth] => [leftmost, rightmost]
+    y E [0, windowHeight] => [top, below]
+*/
+void myMousePassiveMotion(int x, int y){
     // mouse control
+    curMouseXPos = x;
+    curMouseYPos = y;
+
+    printf("x, y: %f, %f\n" ,curMouseXPos ,curMouseYPos);
 }

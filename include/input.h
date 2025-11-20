@@ -25,6 +25,8 @@ extern GLint fPressedTimes;
 extern GLint windowXPos;
 extern GLint windowYPos;
 
+extern std::array<GLfloat, 3> cameraCurrentPos;
+
 extern GLfloat speed;
 extern std::array<GLfloat, 3> submarinCurrentPos;
 
@@ -35,3 +37,6 @@ extern bool dHeld;
 
 extern bool upHeld;
 extern bool downHeld;
+
+extern GLfloat curMouseXPos;
+extern GLfloat curMouseYPos;
