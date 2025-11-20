@@ -72,13 +72,38 @@ void myKeyboardDown(unsigned char key, int, int){
 }
 
 void myKeyboardUp(unsigned char key, int, int){
-    
+    if(key == 'w'){
+        // move forward
+    }
+    if(key == 's'){
+        // move backwards
+    }
+    if(key == 'a'){
+        // move left
+    }
+    if(key == 'd'){
+        // move right
+    }
 }
 
 void specialKeyDown(int key, int, int){
-
+    if(key == GLUT_KEY_UP){
+        // move up
+    }
+    if(key == GLUT_KEY_DOWN){
+        // move down
+    }
 }
 
 void specialKeyUp(int key, int, int){
+    if(key == GLUT_KEY_UP){
+        // move up
+    }
+    if(key == GLUT_KEY_DOWN){
+        // move down
+    }
+}
 
+void myMousePassiveMotion(int, int){
+    // mouse control
 }

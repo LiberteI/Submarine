@@ -13,20 +13,20 @@
 #include "src/renderScene.h"
 // #include "src/"
 
+void registerInputFuncs(){
+    // dump of input functions
+    glutKeyboardFunc(myKeyboardDown);
+    glutKeyboardUpFunc(myKeyboardUp);
+    glutSpecialFunc(specialKeyDown);
+    glutSpecialUpFunc(specialKeyUp);
+    glutPassiveMotionFunc(myMousePassiveMotion);
+}
 
+void registerDisplay(){
+    glutDisplayFunc(myDisplay);
+}
 
-int main(int argc, char** argv){
-    // intialise GLUT
-    glutInit(&argc, argv);
-    // double buffer + color + deep buffer
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    // initialise window
-    glutInitWindowSize(windowWidth, windowHeight);
-    glutCreateWindow("SUBMARINE");
-    recordNormalWindow();
-    // create quadric
-    quad = gluNewQuadric();
-    loadSubmarineFile();
+void initialiseCamera(){
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
     // change into projection mode so that we can change the camera properties
@@ -37,11 +37,40 @@ int main(int argc, char** argv){
     gluPerspective(45, (float)windowWidth / (float)windowHeight, 0.1, 2000.0f);
     // change into model-view so that we can change the object positions
     glMatrixMode(GL_MODELVIEW);
-    glutDisplayFunc(myDisplay);
-    glutKeyboardFunc(myKeyboardDown);
-    glutKeyboardUpFunc(myKeyboardUp);
-    glutSpecialFunc(specialKeyDown);
-    glutSpecialUpFunc(specialKeyUp);
+    
+}
+
+void initialiseWindow(){
+    // initialise window
+    glutInitWindowSize(windowWidth, windowHeight);
+    glutCreateWindow("SUBMARINE");
+    recordNormalWindow();
+}
+
+void initialiseBuffer(){
+    // double buffer + color + deep buffer
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+}
+
+int main(int argc, char** argv){
+    // intialise GLUT
+    glutInit(&argc, argv);
+
+    initialiseBuffer();
+
+    initialiseWindow();
+
+    // create quadric
+    quad = gluNewQuadric();
+
+    loadSubmarineFile();
+    
+    initialiseCamera();
+
+    registerDisplay();
+
+    registerInputFuncs();
+    
     glutMainLoop();
     return 1;
 }
