@@ -5,6 +5,8 @@
 #include <fstream>
 #include <sstream>
 #include <array>
+#include "../include/input.h"
+
 
 GLUquadric* quad;
 
@@ -134,6 +136,9 @@ void loadSubmarineFile(){
 }
 
 void drawSubmarine(){
+    
+    glPushMatrix();
+    glTranslatef(submarinCurrentPos[0], submarinCurrentPos[1], submarinCurrentPos[2]);
 
     glBegin(GL_TRIANGLES);
         /*
@@ -164,4 +169,5 @@ void drawSubmarine(){
             glVertex3fv(vertex3);
         }
     glEnd();
+    glPopMatrix();
 }

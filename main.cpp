@@ -22,7 +22,13 @@ void registerInputFuncs(){
     glutPassiveMotionFunc(myMousePassiveMotion);
 }
 
-void registerDisplay(){
+void myUpdate(){
+    tryMove();
+    glutPostRedisplay();
+}
+
+void registerRender(){
+    glutIdleFunc(myUpdate);
     glutDisplayFunc(myDisplay);
 }
 
@@ -67,7 +73,7 @@ int main(int argc, char** argv){
     
     initialiseCamera();
 
-    registerDisplay();
+    registerRender();
 
     registerInputFuncs();
 

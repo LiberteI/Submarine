@@ -15,6 +15,8 @@ void specialKeyUp(int key, int, int);
 
 void myMousePassiveMotion(int x, int y);
 
+void tryMove();
+
 extern GLint windowWidth;
 extern GLint windowHeight;
 extern GLint uPressedTimes;
@@ -22,3 +24,14 @@ extern GLint fPressedTimes;
 
 extern GLint windowXPos;
 extern GLint windowYPos;
+
+extern GLfloat speed;
+extern std::array<GLfloat, 3> submarinCurrentPos;
+
+extern bool wHeld;
+extern bool sHeld;
+extern bool aHeld;
+extern bool dHeld;
+
+extern bool upHeld;
+extern bool downHeld;
