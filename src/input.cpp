@@ -4,14 +4,11 @@
 #include <cstdio>
 #include <stdlib.h>
 #include <array>
+
+#include "../include/global.h"
 GLint uPressedTimes = 0;
 
 GLint fPressedTimes = 0;
-
-GLint windowWidth = 1000;
-GLint windowHeight = 800;
-GLint windowXPos = 0;
-GLint windowYPos = 0;
 
 GLfloat speed = 0.5;
 std::array<GLfloat, 3> submarinCurrentPos = {0, 0, 0};
@@ -154,8 +151,6 @@ void specialKeyUp(int key, int, int){
         downHeld = false;
     }
 }
-
-
 
 // mouse function : (x, y)
 // (0, 0)      ---> (width - 1, 0)
