@@ -12,6 +12,7 @@ GLint windowHeight = 800;
 GLint windowXPos = 0;
 GLint windowYPos = 0;
 
+// lil helper to record normal window pos and size so that we can recover after
 void recordNormalWindow(){
     windowXPos = glutGet(GLUT_WINDOW_X);
     windowYPos = glutGet(GLUT_WINDOW_Y);
@@ -42,7 +43,7 @@ void tryResizeWindow(){
 }
 
 // screen toggle / polygon mode toggle / quit button
-void myKeyboardDown(unsigned char key, int x, int y){
+void myKeyboardDown(unsigned char key, int, int){
     if(key == 'q'){
         // quit app
         exit(0);
@@ -56,8 +57,28 @@ void myKeyboardDown(unsigned char key, int x, int y){
         tryResizeWindow();
     }
     
+    if(key == 'w'){
+        // move forward
+    }
+    if(key == 's'){
+        // move backwards
+    }
+    if(key == 'a'){
+        // move left
+    }
+    if(key == 'd'){
+        // move right
+    }
 }
 
-void myKeyboardUp(unsigned char key, int x, int y){
+void myKeyboardUp(unsigned char key, int, int){
     
+}
+
+void specialKeyDown(int key, int, int){
+
+}
+
+void specialKeyUp(int key, int, int){
+
 }

@@ -8,6 +8,10 @@ void trySwitchPolygonMode();
 void recordNormalWindow();
 
 void tryResizeWindow();
+
+void specialKeyDown(int key, int, int);
+
+void specialKeyUp(int key, int, int);
 extern GLint windowWidth;
 extern GLint windowHeight;
 extern GLint uPressedTimes;

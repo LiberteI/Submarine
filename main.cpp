@@ -39,6 +39,9 @@ int main(int argc, char** argv){
     glMatrixMode(GL_MODELVIEW);
     glutDisplayFunc(myDisplay);
     glutKeyboardFunc(myKeyboardDown);
+    glutKeyboardUpFunc(myKeyboardUp);
+    glutSpecialFunc(specialKeyDown);
+    glutSpecialUpFunc(specialKeyUp);
     glutMainLoop();
     return 1;
 }
