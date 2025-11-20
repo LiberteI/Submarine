@@ -10,27 +10,9 @@
 #include <string>
 #include "src/input.h"
 #include "src/render.h"
+#include "src/renderScene.h"
 // #include "src/"
 
-
-
-
-
-void myDisplay(){
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glLoadIdentity();
-
-    gluLookAt(0, 20, 200,
-              0, 0, 0, 
-              0, 1, 0);
-
-    drawOriginDebugger();
-
-    drawSubmarine();
-
-    glutSwapBuffers();
-}
 
 
 int main(int argc, char** argv){
