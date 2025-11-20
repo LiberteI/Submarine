@@ -8,10 +8,10 @@
 #include <sstream>
 #include <array>
 #include <string>
-#include "src/input.h"
-#include "src/render.h"
-#include "src/renderScene.h"
-// #include "src/"
+#include "include/input.h"
+#include "include/render.h"
+#include "include/renderScene.h"
+// #include "include/"
 
 void registerInputFuncs(){
     // dump of input functions
@@ -70,7 +70,7 @@ int main(int argc, char** argv){
     registerDisplay();
 
     registerInputFuncs();
-    
+
     glutMainLoop();
     return 1;
 }
