@@ -4,25 +4,34 @@
 #include "../include/render.h"
 #include "../include/input.h"
 #include <cmath>
+#include <array>
 
-GLfloat cameraOffset = 100;
+GLfloat cameraOffset = 500;
 GLfloat horizontalAngle;
 GLfloat verticalAngle;
+std::array<GLfloat, 3> currentCamPos;;
 /*  
     offset angle: [-1/4pi - 1/4pi]
 */
-void sychronizeCameraWithSubmarine(){
+void computeOffsetAngles(){
     GLfloat interpolatedHorizontal = curMouseXPos / windowWidth - 0.5; // -0.5 - 0.5
     GLfloat interpolatedVertical = curMouseYPos / windowHeight - 0.5; // -0.5 - 0.5
     GLfloat pi = M_PI;
     
-    horizontalAngle = interpolatedHorizontal * 1 / 2 * pi;
-    verticalAngle = interpolatedVertical * 1 / 2 * pi;
+    horizontalAngle = interpolatedHorizontal * pi;
+    verticalAngle = interpolatedVertical * pi;
+}
+void computeCurCamPos(){
+    currentCamPos[0] = submarinCurrentPos[0] + cos(horizontalAngle) * cameraOffset;
+    currentCamPos[1] = submarinCurrentPos[1] + sin(verticalAngle) * cameraOffset;
+    currentCamPos[2] = submarinCurrentPos[2] + sin(horizontalAngle) * cameraOffset;
 }
 void myUpdate(){
     tryMove();
 
-    sychronizeCameraWithSubmarine();
+    computeOffsetAngles();
+
+    computeCurCamPos();
 
     glutPostRedisplay();
 }
@@ -31,7 +40,7 @@ void myDisplay(){
 
     glLoadIdentity();
     // glu look at : camera pos {x,y,z}, look at{x,y,z}, up pos{x,y,z}
-    gluLookAt(submarinCurrentPos[0] + cos(horizontalAngle) * cameraOffset, submarinCurrentPos[1] + sin(verticalAngle) * cameraOffset, submarinCurrentPos[2] + sin(horizontalAngle) * cameraOffset,
+    gluLookAt(currentCamPos[0], currentCamPos[1], currentCamPos[2],
               submarinCurrentPos[0], submarinCurrentPos[1], submarinCurrentPos[2], 
               0, 1, 0);
 

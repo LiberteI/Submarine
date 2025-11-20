@@ -170,6 +170,5 @@ void myMousePassiveMotion(int x, int y){
     // mouse control
     curMouseXPos = x;
     curMouseYPos = y;
-
-    printf("x, y: %f, %f\n" ,curMouseXPos ,curMouseYPos);
+    // printf("x, y: %f, %f\n" ,curMouseXPos ,curMouseYPos);
 }
