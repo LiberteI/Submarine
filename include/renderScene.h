@@ -1,1 +1,3 @@
 void myDisplay();
+
+void myUpdate();

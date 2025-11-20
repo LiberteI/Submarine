@@ -22,11 +22,6 @@ void registerInputFuncs(){
     glutPassiveMotionFunc(myMousePassiveMotion);
 }
 
-void myUpdate(){
-    tryMove();
-    glutPostRedisplay();
-}
-
 void registerRender(){
     glutIdleFunc(myUpdate);
     glutDisplayFunc(myDisplay);

@@ -2,6 +2,12 @@
 
 #include <GLUT/glut.h>
 #include "../include/render.h"
+#include "../include/input.h"
+
+void myUpdate(){
+    tryMove();
+    glutPostRedisplay();
+}
 void myDisplay(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
