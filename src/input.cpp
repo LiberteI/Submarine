@@ -56,11 +56,11 @@ void tryResizeWindow(){
 
 void tryMove(){
     if(wHeld){
-        submarinCurrentPos[0] += speed;
+        submarinCurrentPos[0] -= speed;
         // printf("wheld!: %f\n", speed);
     }
     if(sHeld){
-        submarinCurrentPos[0] -= speed;
+        submarinCurrentPos[0] += speed;
         // printf("sheld!: %f\n", speed);
     }
 
