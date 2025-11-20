@@ -14,6 +14,7 @@ void specialKeyDown(int key, int, int);
 void specialKeyUp(int key, int, int);
 
 void myMousePassiveMotion(int x, int y);
+
 extern GLint windowWidth;
 extern GLint windowHeight;
 extern GLint uPressedTimes;

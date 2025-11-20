@@ -11,8 +11,18 @@ GLUquadric* quad;
 GLint sliceCount = 60;
 GLint stackCount = 60;
 
+/*
+    vector vs array:
+    vector: java arraylist
+    array : java array
+*/
+// looks like: { {1, 2, 3}, {4, 5, 6}, {x, y, z}}
 std::vector<std::array<GLfloat, 3>> submarineVertexList;
 std::vector<std::array<GLfloat, 3>> submarineNormalList;
+
+// an arraylist stroing an array of pairs
+// looks like : { { {1,999}, {3, 999}, {5, 999} } }
+std::vector<std::array<std::array<GLint, 2>, 3>> submarineFaceListWithNormal;
 void drawOriginDebugger(){
     // draw white sphere
     //void gluSphere(GLUquadric *quad, GLdouble radius, GLint slices, GLint stacks)
@@ -45,45 +55,6 @@ void drawOriginDebugger(){
 
 // load file -> read line by line -> ignore lines that do not start with g/v/vn/f -> store vertices -> store normals -> follow instr
 // note : just figured out the indices are cumulative.
-void loadSubmarineFile(){
-    // load submarine file
-    std::ifstream file("assets/submarine.obj");
-
-    // guard file
-    if(!file.is_open()){
-        printf("fail to open submarine file");
-        return;
-    }
-
-    std::string currentLine;
-    // read the next line and store it in "currentLine"
-    // currentLine: "v x y z"
-    while(std::getline(file, currentLine)){
-        // get current string stream version of currentLine, so that we can use >> effectively
-        std::stringstream curTokenizedLine(currentLine);
-        std::string identifer;
-
-        curTokenizedLine >> identifer;
-        
-        // skip other lines
-        if(identifer != "v" && identifer != "vn"){
-            continue;
-        }
-        GLfloat x, y, z;
-        curTokenizedLine >> x;
-        curTokenizedLine >> y;
-        curTokenizedLine >> z;
-        // add x,y,z to list accordingly
-        if(identifer == "v"){
-            submarineVertexList.push_back({x, y, z});
-        }
-        if(identifer == "vn"){
-            submarineNormalList.push_back({x, y, z});
-        }
-    }
-
-}
-
 // used for parsing tokens looking like "123//456". return an array{123, 456}
 std::array<GLint, 2> parseToken(std::string token){
     std::array<GLint, 2> array;
@@ -107,44 +78,90 @@ std::array<GLint, 2> parseToken(std::string token){
 
     return array;
 }
-void drawSubmarine(){
-    std::ifstream submarineObjFile("assets/submarine.obj");
-    if(!submarineObjFile.is_open()){
-        printf("cannot draw submarine because failure in opening submarine file");
+
+void loadSubmarineFile(){
+    // load submarine file
+    std::ifstream file("assets/submarine.obj");
+
+    // guard file
+    if(!file.is_open()){
+        printf("fail to open submarine file");
         return;
     }
 
     std::string currentLine;
-
-    glBegin(GL_TRIANGLES);
-    while(std::getline(submarineObjFile, currentLine)){
-        // we use an identifer to make operatios to the lines
+    // read the next line and store it in "currentLine"
+    // currentLine: "v x y z"
+    while(std::getline(file, currentLine)){
+        // get current string stream version of currentLine, so that we can use >> effectively
+        std::stringstream curTokenizedLine(currentLine);
         std::string identifer;
-        std::stringstream tokenisedCurrentLine(currentLine);
 
-        tokenisedCurrentLine >> identifer;
-
-        // skip other lines except for f because we only need the instructions
-        if(identifer != "f"){
+        curTokenizedLine >> identifer;
+        
+        // skip other lines
+        if(identifer != "v" && identifer != "vn" && identifer != "f"){
             continue;
         }
-        // token looks like : "123//456"
-        std::string token1, token2, token3;
-        tokenisedCurrentLine >> token1;
-        tokenisedCurrentLine >> token2;
-        tokenisedCurrentLine >> token3;
 
-        std::array<GLint, 2> parsedToken1 = parseToken(token1);
-        std::array<GLint, 2> parsedToken2 = parseToken(token2);
-        std::array<GLint, 2> parsedToken3 = parseToken(token3);
-        
-        
-        // glVertex3fv expects GLfloat*. use data() to parse array obj to it
-        glNormal3fv(submarineNormalList[parsedToken1[1] - 1].data());
-        glVertex3fv(submarineVertexList[parsedToken1[0] - 1].data());
-        glVertex3fv(submarineVertexList[parsedToken2[0] - 1].data());
-        glVertex3fv(submarineVertexList[parsedToken3[0] - 1].data());
-        
+        if(identifer == "f"){
+            // token looks like : "123//456"
+            std::string token1, token2, token3;
+            curTokenizedLine >> token1;
+            curTokenizedLine >> token2;
+            curTokenizedLine >> token3;
+
+            std::array<GLint, 2> parsedToken1 = parseToken(token1);
+            std::array<GLint, 2> parsedToken2 = parseToken(token2);
+            std::array<GLint, 2> parsedToken3 = parseToken(token3);
+
+            submarineFaceListWithNormal.push_back({parsedToken1, parsedToken2, parsedToken3});
+            continue;
+        }
+        // add x,y,z to list accordingly
+        GLfloat x, y, z;
+        curTokenizedLine >> x;
+        curTokenizedLine >> y;
+        curTokenizedLine >> z;
+        if(identifer == "v"){
+            submarineVertexList.push_back({x, y, z});
+        }
+        if(identifer == "vn"){
+            submarineNormalList.push_back({x, y, z});
+        }
     }
+
+}
+
+void drawSubmarine(){
+
+    glBegin(GL_TRIANGLES);
+        /*
+            looks like :{       
+                            { {1,1}, {3, 1}, {5, 1} }, <-- face
+                            { {1,2}, {3, 2}, {5, 2} },
+                            { {v1,n}, {v2,n}, {v3,,n}}
+                        }
+        */ 
+        for(auto &face : submarineFaceListWithNormal){
+            int normalIdxInNormalList = face[0][1] - 1;
+
+            int vertexIdx1InVertexList = face[0][0] - 1;
+
+            int vertexIdx2InVertexList = face[1][0] - 1;
+
+            int vertexIdx3InVertexList = face[2][0] - 1;
+            
+            GLfloat* vertex1 = submarineVertexList[vertexIdx1InVertexList].data();
+            GLfloat* vertex2 = submarineVertexList[vertexIdx2InVertexList].data();
+            GLfloat* vertex3 = submarineVertexList[vertexIdx3InVertexList].data();
+
+            GLfloat* curNormal = submarineNormalList[normalIdxInNormalList].data();
+
+            glNormal3fv(curNormal);
+            glVertex3fv(vertex1);
+            glVertex3fv(vertex2);
+            glVertex3fv(vertex3);
+        }
     glEnd();
 }
