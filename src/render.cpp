@@ -200,11 +200,14 @@ void drawSubmarine(){
 }
 
 /*  
-    disk should lies on z = -100
+    disk should lies on y = -100
 */
 void drawDisk(){
+    glPushMatrix();
+    glRotatef(-90, 1, 0, 0);
     // inner : 0 -> filled
     // loop : 1 -> ring
     // void gluDisk(GLUquadric *quad, GLdouble inner, GLdouble outer, GLint slices, GLint loops)
     gluDisk(quad, 0, diskSize, sliceCount, 1);
+    glPopMatrix();
 }
