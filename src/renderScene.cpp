@@ -21,11 +21,14 @@ void computeOffsetAngles(){
     horizontalAngle = interpolatedHorizontal * pi;
     verticalAngle = interpolatedVertical * pi;
 }
+
+// it is like rotating around a planet in a2
 void computeCurCamPos(){
     currentCamPos[0] = submarinCurrentPos[0] + cos(horizontalAngle) * cameraOffset;
     currentCamPos[1] = submarinCurrentPos[1] + sin(verticalAngle) * cameraOffset;
     currentCamPos[2] = submarinCurrentPos[2] + sin(horizontalAngle) * cameraOffset;
 }
+
 void myUpdate(){
     tryMove();
 
@@ -35,6 +38,7 @@ void myUpdate(){
 
     glutPostRedisplay();
 }
+
 void myDisplay(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

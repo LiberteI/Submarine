@@ -53,6 +53,19 @@ void initialiseBuffer(){
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 }
 
+void initialiseLightingConfig(){
+    // enable GL's lighting system
+    glEnable(GL_LIGHTING);
+    // enable a specific light source as the sun(GL_LIGHT0)
+    glEnable(GL_LIGHT0);
+    // allow glColor() to affect material diffuse color
+    glEnable(GL_COLOR_MATERIAL);
+    // use normal
+    glEnable(GL_NORMALIZE);
+    // use smooth shading
+    glShadeModel(GL_SMOOTH);
+}
+
 int main(int argc, char** argv){
     // intialise GLUT
     glutInit(&argc, argv);
@@ -60,6 +73,8 @@ int main(int argc, char** argv){
     initialiseBuffer();
 
     initialiseWindow();
+
+    initialiseLightingConfig();
 
     // create quadric
     quad = gluNewQuadric();
