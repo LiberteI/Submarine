@@ -3,6 +3,7 @@
 #include <GLUT/glut.h>
 #include "../include/render.h"
 #include "../include/input.h"
+#include "../include/lighting.h"
 #include <cmath>
 #include <array>
 
@@ -47,6 +48,8 @@ void myDisplay(){
     gluLookAt(currentCamPos[0], currentCamPos[1], currentCamPos[2],
               submarinCurrentPos[0], submarinCurrentPos[1], submarinCurrentPos[2], 
               0, 1, 0);
+
+    glLightfv(GL_LIGHT0, GL_POSITION, sunlightDir);
 
     drawOriginDebugger();
 

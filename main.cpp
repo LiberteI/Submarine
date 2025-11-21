@@ -11,6 +11,7 @@
 #include "include/input.h"
 #include "include/render.h"
 #include "include/renderScene.h"
+#include "include/lighting.h"
 // #include "include/"
 
 void registerInputFuncs(){
@@ -86,6 +87,8 @@ int main(int argc, char** argv){
     registerRender();
 
     registerInputFuncs();
+
+    initialiseLightings();
 
     glutMainLoop();
     return 1;

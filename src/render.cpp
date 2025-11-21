@@ -25,33 +25,38 @@ std::vector<std::array<GLfloat, 3>> submarineNormalList;
 // an arraylist stroing an array of pairs
 // looks like : { { {1,999}, {3, 999}, {5, 999} } }
 std::vector<std::array<std::array<GLint, 2>, 3>> submarineFaceListWithNormal;
-void drawOriginDebugger(){
-    // draw white sphere
-    //void gluSphere(GLUquadric *quad, GLdouble radius, GLint slices, GLint stacks)
-    glColor3f(1, 1, 1);
+void drawOriginDebugger() {
+
+    // draw sphere with lighting
+    GLfloat white[] = {1,1,1,1};
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, white);
     gluSphere(quad, 0.5, sliceCount, stackCount);
-    
-    // x debugger
-    glColor3f(1, 0, 0);
+
+    // draw axes without lighting
+    glDisable(GL_LIGHTING);
+    glDisable(GL_COLOR_MATERIAL);
     glLineWidth(5.0);
-    glBegin(GL_LINES);
-        glVertex3f(0, 0, 0);
-        glVertex3f(20, 0 ,0);
-    glEnd();
 
-    // y debugger
-    glColor3f(0, 1, 0);
+    // X axis
+    glColor3f(1,0,0); 
     glBegin(GL_LINES);
-        glVertex3f(0, 0, 0);
-        glVertex3f(0, 20 ,0);
+        glVertex3f(0,0,0);
+        glVertex3f(20,0,0);
     glEnd();
-
-    // z debugger
-    glColor3f(0, 0, 1);
+    // Y axis
+    glColor3f(0,1,0); 
     glBegin(GL_LINES);
-        glVertex3f(0, 0, 0);
-        glVertex3f(0, 0 ,20);
+        glVertex3f(0,0,0);
+        glVertex3f(0,20,0);
     glEnd();
+    // Z axis
+    glColor3f(0,0,1); 
+    glBegin(GL_LINES);
+        glVertex3f(0,0,0);
+        glVertex3f(0,0,20);
+    glEnd();
+    // restore
+    glEnable(GL_LIGHTING); 
 }
 
 
@@ -135,8 +140,27 @@ void loadSubmarineFile(){
 
 }
 
+void initialiseSubmarineMaterial(){
+    // ambient gray (low brightness)
+    GLfloat ambient[]  = {0.2f, 0.2f, 0.2f, 1.0f};
+
+    // diffuse gray (main visible color)
+    GLfloat diffuse[]  = {0.6f, 0.6f, 0.6f, 1.0f};
+
+    // specular highlight (steel hull has some shine)
+    GLfloat specular[] = {0.4f, 0.4f, 0.4f, 1.0f};
+
+    // shininess controls highlight size (higher = sharper)
+    GLfloat shininess  = 32.0f;
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT,  ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE,  diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+    glMaterialf(GL_FRONT, GL_SHININESS, shininess);
+}
+
 void drawSubmarine(){
-    
+    initialiseSubmarineMaterial();
     glPushMatrix();
     glTranslatef(submarinCurrentPos[0], submarinCurrentPos[1], submarinCurrentPos[2]);
 
