@@ -66,7 +66,14 @@ void initialiseLightingConfig(){
     // use smooth shading
     glShadeModel(GL_SMOOTH);
 }
+void initialiseQuad(){
+    // create quadric
+    quad = gluNewQuadric();
+    // enable smooth normals for quad users
+    gluQuadricNormals(quad, GLU_SMOOTH);
+}
 
+// i try to let main keep the same level of abstraction and i think main is self-explainary
 int main(int argc, char** argv){
     // intialise GLUT
     glutInit(&argc, argv);
@@ -77,9 +84,8 @@ int main(int argc, char** argv){
 
     initialiseLightingConfig();
 
-    // create quadric
-    quad = gluNewQuadric();
-
+    initialiseQuad();
+    
     loadSubmarineFile();
     
     initialiseCamera();
@@ -91,5 +97,6 @@ int main(int argc, char** argv){
     initialiseLightings();
 
     glutMainLoop();
+    
     return 1;
 }

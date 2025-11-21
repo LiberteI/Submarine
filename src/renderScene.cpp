@@ -55,5 +55,7 @@ void myDisplay(){
 
     drawSubmarine();
 
+    drawDisk();
+
     glutSwapBuffers();
 }

@@ -13,18 +13,21 @@ GLUquadric* quad;
 GLint sliceCount = 60;
 GLint stackCount = 60;
 
+GLint diskSize = 500;
+
 /*
     vector vs array:
     vector: java arraylist
     array : java array
 */
-// looks like: { {1, 2, 3}, {4, 5, 6}, {x, y, z}}
+// looks like: { {1, 2, 3}, {4, 5, 6}, {x, y, z} }
 std::vector<std::array<GLfloat, 3>> submarineVertexList;
 std::vector<std::array<GLfloat, 3>> submarineNormalList;
 
 // an arraylist stroing an array of pairs
 // looks like : { { {1,999}, {3, 999}, {5, 999} } }
 std::vector<std::array<std::array<GLint, 2>, 3>> submarineFaceListWithNormal;
+
 void drawOriginDebugger() {
 
     // draw sphere with lighting
@@ -194,4 +197,14 @@ void drawSubmarine(){
         }
     glEnd();
     glPopMatrix();
+}
+
+/*  
+    disk should lies on z = -100
+*/
+void drawDisk(){
+    // inner : 0 -> filled
+    // loop : 1 -> ring
+    // void gluDisk(GLUquadric *quad, GLdouble inner, GLdouble outer, GLint slices, GLint loops)
+    gluDisk(quad, 0, diskSize, sliceCount, 1);
 }
