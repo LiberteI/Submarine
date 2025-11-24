@@ -36,7 +36,7 @@ void initialiseCamera(){
     // load the identity matrix into the projection matrix
     glLoadIdentity();
     // gluPerspective(fovy, aspect, near, far)
-    gluPerspective(45, (float)windowWidth / (float)windowHeight, 0.1, 2000.0f);
+    gluPerspective(45, (float)windowWidth / (float)windowHeight, 0.1, 5000.0f);
     // change into model-view so that we can change the object positions
     glMatrixMode(GL_MODELVIEW);
     

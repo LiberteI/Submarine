@@ -13,7 +13,7 @@ GLUquadric* quad;
 GLint sliceCount = 60;
 GLint stackCount = 60;
 
-GLint oceanBottomRadius = 500;
+GLint oceanBottomRadius = 1500;
 GLdouble oceanBottomPos = -500;
 
 GLdouble oceanTop = 200;
