@@ -13,8 +13,11 @@ GLUquadric* quad;
 GLint sliceCount = 60;
 GLint stackCount = 60;
 
-GLint diskSize = 500;
+GLint oceanBottomRadius = 500;
+GLdouble oceanBottomPos = -500;
 
+GLdouble oceanTop = 200;
+GLdouble oceanDepth = 800;
 /*
     vector vs array:
     vector: java arraylist
@@ -203,19 +206,42 @@ void drawSubmarine(){
     disk should lies on y = -100
 */
 void drawDisk(){
+    // *** The last transform you call affects the object first. ***
     glPushMatrix();
-    glTranslatef(0, -1000, 0);
+    glTranslatef(0, oceanBottomPos, 0);
     glRotatef(-90, 1, 0, 0);
     
     // inner : 0 -> filled
     // loop : 1 -> ring
-    // void gluDisk(GLUquadric *quad, GLdouble inner, GLdouble outer, GLint slices, GLint loops)
-    gluDisk(quad, 0, diskSize, sliceCount, 1);
+    /*
+        gluDisk(GLUquadric* quad,
+            GLdouble innerRadius,
+            GLdouble outerRadius,
+            GLint slices,
+            GLint loops);
+    */
+    gluDisk(quad, 0, oceanBottomRadius, sliceCount, 1);
     glPopMatrix();
 }
 
-// void drawCylinder(){
-//     glPushMatrix();
+void drawCylinder(){
+    glPushMatrix();
+    glTranslatef(0, oceanBottomPos - 50, 0);
+    glRotatef(-90, 1, 0, 0);
+    /*
+        gluCylinder(GLUquadric *quad,
+            GLdouble baseRadius,
+            GLdouble topRadius,
+            GLdouble height,
+            GLint slices,
+            GLint stacks);
+    */
+    gluCylinder(quad, oceanBottomRadius -20, 
+                oceanBottomRadius - 20, 
+                oceanDepth, 
+                sliceCount, 
+                stackCount
+    );
 
-//     // gluCylinder(quad, -a)
-// }
+    glPopMatrix();
+}

@@ -10,7 +10,7 @@ GLint uPressedTimes = 0;
 
 GLint fPressedTimes = 0;
 
-GLfloat speed = 0.5;
+GLfloat speed = 5;
 std::array<GLfloat, 3> submarinCurrentPos = {0, 0, 0};
 
 GLfloat curMouseXPos;

@@ -15,4 +15,4 @@ extern GLint stackCount;
 extern std::vector<std::array<GLfloat, 3>> submarineVertexList;
 extern std::vector<std::array<GLfloat, 3>> submarineNormalList;
 
-extern GLint diskSize;
+extern GLint oceanBottomRadius;

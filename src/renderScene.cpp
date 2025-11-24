@@ -70,7 +70,7 @@ void myDisplay(){
 
     drawDisk();
 
-    // drawCylinder();
+    drawCylinder();
 
     glutSwapBuffers();
 }
