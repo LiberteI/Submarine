@@ -6,6 +6,7 @@
 #include "../include/lighting.h"
 #include <cmath>
 #include <array>
+#include <algorithm>
 
 GLfloat cameraOffset = 500;
 GLfloat horizontalAngle;
@@ -21,6 +22,10 @@ void computeOffsetAngles(){
     
     horizontalAngle = interpolatedHorizontal * pi;
     verticalAngle = interpolatedVertical * pi;
+
+    // clamp vertical angle so that camera will not teleport
+    verticalAngle = std::clamp(verticalAngle, -1.2f, 1.2f);
+
 }
 
 // it is like rotating around a planet in a2
