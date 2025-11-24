@@ -28,7 +28,7 @@ void registerRender(){
     glutDisplayFunc(myDisplay);
 }
 
-void initialiseCamera(){
+void initialiseProjection(){
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
     // change into projection mode so that we can change the camera properties
@@ -54,7 +54,7 @@ void initialiseBuffer(){
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 }
 
-void initialiseLightingConfig(){
+void initialiseGlobalStates(){
     // enable GL's lighting system
     glEnable(GL_LIGHTING);
     // enable a specific light source as the sun(GL_LIGHT0)
@@ -65,6 +65,8 @@ void initialiseLightingConfig(){
     glEnable(GL_NORMALIZE);
     // use smooth shading
     glShadeModel(GL_SMOOTH);
+
+ 
 }
 void initialiseQuad(){
     // create quadric
@@ -73,28 +75,35 @@ void initialiseQuad(){
     gluQuadricNormals(quad, GLU_SMOOTH);
 }
 
-// i try to let main keep the same level of abstraction and i think main is self-explainary
-int main(int argc, char** argv){
-    // intialise GLUT
-    glutInit(&argc, argv);
-
-    initialiseBuffer();
-
-    initialiseWindow();
-
-    initialiseLightingConfig();
+void initialiseSceneResources(){
+    launchLightings();
 
     initialiseQuad();
     
     loadSubmarineFile();
-    
-    initialiseCamera();
+}
 
+void initialiseCallbackRegistrations(){
     registerRender();
 
     registerInputFuncs();
 
-    initialiseLightings();
+}
+
+// i try to let main keep the same level of abstraction and i think main is self-explainary
+int main(int argc, char** argv){
+    // intialise GLUT, playmode, window
+    glutInit(&argc, argv);
+    initialiseBuffer();
+    initialiseWindow();
+
+    initialiseGlobalStates();
+  
+    initialiseProjection();
+
+    initialiseSceneResources();
+
+    initialiseCallbackRegistrations();
 
     glutMainLoop();
     

@@ -20,6 +20,6 @@ void sunlight(){
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambientConfig);
 }
 
-void initialiseLightings(){
+void launchLightings(){
     sunlight();
 }

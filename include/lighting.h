@@ -1,6 +1,6 @@
 #include <GLUT/glut.h>
 void sunlight();
 
-void initialiseLightings();
+void launchLightings();
 
 extern GLfloat sunlightDir[];
