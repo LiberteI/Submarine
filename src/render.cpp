@@ -44,19 +44,19 @@ void drawOriginDebugger() {
     glColor3f(1,0,0); 
     glBegin(GL_LINES);
         glVertex3f(0,0,0);
-        glVertex3f(20,0,0);
+        glVertex3f(100,0,0);
     glEnd();
     // Y axis
     glColor3f(0,1,0); 
     glBegin(GL_LINES);
         glVertex3f(0,0,0);
-        glVertex3f(0,20,0);
+        glVertex3f(0,100,0);
     glEnd();
     // Z axis
     glColor3f(0,0,1); 
     glBegin(GL_LINES);
         glVertex3f(0,0,0);
-        glVertex3f(0,0,20);
+        glVertex3f(0,0,100);
     glEnd();
     // restore
     glEnable(GL_LIGHTING); 
@@ -213,8 +213,8 @@ void drawDisk(){
     glPopMatrix();
 }
 
-void drawCylinder(){
-    glPushMatrix();
+// void drawCylinder(){
+//     glPushMatrix();
 
-    // gluCylinder(quad, -a)
-}
+//     // gluCylinder(quad, -a)
+// }

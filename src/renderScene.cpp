@@ -24,7 +24,7 @@ void computeOffsetAngles(){
     verticalAngle = interpolatedVertical * pi;
 
     // clamp vertical angle so that camera will not teleport
-    verticalAngle = std::clamp(verticalAngle, -1.2f, 1.2f);
+    verticalAngle = std::clamp(verticalAngle, -1.5f, 1.5f);
 
 }
 
@@ -70,7 +70,7 @@ void myDisplay(){
 
     drawDisk();
 
-    drawCylinder();
+    // drawCylinder();
 
     glutSwapBuffers();
 }
