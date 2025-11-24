@@ -24,10 +24,18 @@ void computeOffsetAngles(){
 }
 
 // it is like rotating around a planet in a2
+/*
+    x = cx + r*cos(φ)*cos(θ)
+    y = cy + r*sin(φ)
+    z = cz + r*cos(φ)*sin(θ)
+*/
 void computeCurCamPos(){
-    currentCamPos[0] = submarinCurrentPos[0] + cos(horizontalAngle) * cameraOffset;
+    // x
+    currentCamPos[0] = submarinCurrentPos[0] + cos(verticalAngle) * cos(horizontalAngle) * cameraOffset;
+    // y
     currentCamPos[1] = submarinCurrentPos[1] + sin(verticalAngle) * cameraOffset;
-    currentCamPos[2] = submarinCurrentPos[2] + sin(horizontalAngle) * cameraOffset;
+    // z
+    currentCamPos[2] = submarinCurrentPos[2] + cos(verticalAngle) * sin(horizontalAngle) * cameraOffset;
 }
 
 void myUpdate(){
@@ -56,6 +64,8 @@ void myDisplay(){
     drawSubmarine();
 
     drawDisk();
+
+    drawCylinder();
 
     glutSwapBuffers();
 }

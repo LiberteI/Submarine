@@ -5,6 +5,7 @@ std::array<GLint, 2> parseToken(std::string token);
 void drawSubmarine();
 void loadSubmarineFile();
 void drawDisk();
+void drawCylinder();
 
 extern GLUquadric* quad;
 

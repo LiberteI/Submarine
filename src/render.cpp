@@ -204,10 +204,17 @@ void drawSubmarine(){
 */
 void drawDisk(){
     glPushMatrix();
-    glRotatef(-90, 1, 0, 0);
+    // glRotatef(-90, 1, 0, 0);
+    glTranslatef(0, -1000, 0);
     // inner : 0 -> filled
     // loop : 1 -> ring
     // void gluDisk(GLUquadric *quad, GLdouble inner, GLdouble outer, GLint slices, GLint loops)
     gluDisk(quad, 0, diskSize, sliceCount, 1);
     glPopMatrix();
+}
+
+void drawCylinder(){
+    glPushMatrix();
+
+    // gluCylinder(quad, -a)
 }
