@@ -23,14 +23,12 @@ void registerInputFuncs(){
     glutPassiveMotionFunc(myMousePassiveMotion);
 }
 
-void registerRender(){
+void registerRenderer(){
     glutIdleFunc(myUpdate);
     glutDisplayFunc(myDisplay);
 }
 
 void initialiseProjection(){
-    // enable depth testing
-    glEnable(GL_DEPTH_TEST);
     // change into projection mode so that we can change the camera properties
     glMatrixMode(GL_PROJECTION);
     // load the identity matrix into the projection matrix
@@ -42,6 +40,12 @@ void initialiseProjection(){
     
 }
 
+void initialiseGeometryTools(){
+    // create quadric
+    quad = gluNewQuadric();
+    // enable smooth normals for quad users
+    gluQuadricNormals(quad, GLU_SMOOTH);
+}
 void initialiseWindow(){
     // initialise window
     glutInitWindowSize(windowWidth, windowHeight);
@@ -55,36 +59,31 @@ void initialiseBuffer(){
 }
 
 void initialiseGlobalStates(){
+    
     // enable GL's lighting system
     glEnable(GL_LIGHTING);
-    // enable a specific light source as the sun(GL_LIGHT0)
-    glEnable(GL_LIGHT0);
     // allow glColor() to affect material diffuse color
     glEnable(GL_COLOR_MATERIAL);
     // use normal
     glEnable(GL_NORMALIZE);
     // use smooth shading
     glShadeModel(GL_SMOOTH);
+    // enable depth testing
+    glEnable(GL_DEPTH_TEST);
+}
 
- 
-}
-void initialiseQuad(){
-    // create quadric
-    quad = gluNewQuadric();
-    // enable smooth normals for quad users
-    gluQuadricNormals(quad, GLU_SMOOTH);
-}
 
 void initialiseSceneResources(){
-    launchLightings();
+    // enable a specific light source as the sun(GL_LIGHT0)
+    glEnable(GL_LIGHT0);
 
-    initialiseQuad();
+    launchLightings();
     
     loadSubmarineFile();
 }
 
 void initialiseCallbackRegistrations(){
-    registerRender();
+    registerRenderer();
 
     registerInputFuncs();
 
@@ -100,6 +99,8 @@ int main(int argc, char** argv){
     initialiseGlobalStates();
   
     initialiseProjection();
+
+    initialiseGeometryTools();
 
     initialiseSceneResources();
 
