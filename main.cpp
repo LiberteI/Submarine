@@ -12,7 +12,10 @@
 #include "include/render.h"
 #include "include/renderScene.h"
 #include "include/lighting.h"
-// #include "include/"
+#define STB_IMAGE_IMPLEMENTATION
+#include "include/stb_image.h"
+
+GLuint sandTexture;
 
 void registerInputFuncs(){
     // dump of input functions
@@ -43,9 +46,12 @@ void initialiseProjection(){
 void initialiseGeometryTools(){
     // create quadric
     quad = gluNewQuadric();
-    // enable smooth normals for quad users
+    // enable smooth normals for quad users. normals interpolated across surface
     gluQuadricNormals(quad, GLU_SMOOTH);
+    // when you generate vertices, also generate UV (texture coordinates) coordinates. (normal xy coordinate system)
+    gluQuadricTexture(quad, GL_TRUE);
 }
+
 void initialiseWindow(){
     // initialise window
     glutInitWindowSize(windowWidth, windowHeight);
@@ -59,7 +65,6 @@ void initialiseBuffer(){
 }
 
 void initialiseGlobalStates(){
-    
     // enable GL's lighting system
     glEnable(GL_LIGHTING);
     // allow glColor() to affect material diffuse color
@@ -70,7 +75,11 @@ void initialiseGlobalStates(){
     glShadeModel(GL_SMOOTH);
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
+    // use texture
+    glEnable(GL_TEXTURE_2D);
 }
+
+// load an img file from disk and create an GL texture obj
 
 
 void initialiseSceneResources(){
@@ -80,6 +89,10 @@ void initialiseSceneResources(){
     launchLightings();
     
     loadSubmarineFile();
+
+    // sandTexture = loadTexture("/assets/sand.jpg");
+
+
 }
 
 void initialiseCallbackRegistrations(){
