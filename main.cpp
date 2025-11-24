@@ -83,7 +83,7 @@ void initialiseGlobalStates(){
 GLuint loadTexture(const char* filePath){
     int width, height, channels;
 
-    // use stb to load file
+    // ***use stb to load file***
     // stbi_load(const char *filename, int *x, int *y, int *comp, int req_comp)
     unsigned char* data = stbi_load(filePath, &width, &height, &channels, 4);
 
@@ -91,8 +91,65 @@ GLuint loadTexture(const char* filePath){
         printf("Failed to load texture: %s\n", filePath);
         return 0;
     }
-    printf("success\n");
-    return 1;
+    // printf("success\n");
+
+    GLuint texture;
+
+    // generate a texture obj on the GPU and store its handle in "texture"
+    // this allocates a texture space in GPU memory but has not uploaded my texture img yet
+    glGenTextures(1, &texture);
+
+    // bind the texture so that all subsequent texture operations affect this texture obj
+    // we gonna modify this texture obj by using this to select the texture
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    // ***TEXTURE CONFIGURATIONS***
+    // void glTexParameteri(GLenum target, GLenum pname, GLint param
+    // how the texture is filtered when it is displayed smaller than ori resolution
+    // GL_LINEAR: smooth interpolation between pixels
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    // how it is filtered if bigger
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // infinite scrolling for UV coordinates
+    // GL_REPEAT = tile the texture
+    // S -> U axis(horizontal)
+    // T -> V axis(vertical)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    // ***UPLOAD CPU DATA TO GPU***
+    /*
+        glTexImage2D(
+            GLenum target, 
+            GLint level,
+            GLint internalFormat,
+            GLsizei width,
+            GLsizei height,
+            GLint border,
+            GLenum format,
+            GLenum type,
+            const void * data
+        );
+    */
+    glTexImage2D(
+        GL_TEXTURE_2D,   // 2D texture to upload
+        0,               // no mipmap
+        GL_RGBA,         // feed RGBA to GPU
+        width,           // img width
+        height,          // img height
+        0,               // border = 0
+        GL_RGBA,         // input pixel format RGBA
+        GL_UNSIGNED_BYTE,// 1 byte per channel
+        data             // pointer to pixel buffer in RAM
+    );
+
+    // free CPU side pixel buffer
+    stbi_image_free(data);
+
+    // return OpenGL texture ID
+    return texture;
 }
 
 void initialiseSceneResources(){
@@ -103,9 +160,10 @@ void initialiseSceneResources(){
     
     loadSubmarineFile();
 
+    // flip coordinate
+    stbi_set_flip_vertically_on_load(true);
+
     sandTexture = loadTexture("assets/sand.jpg");
-
-
 }
 
 void initialiseCallbackRegistrations(){
