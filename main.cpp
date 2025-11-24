@@ -80,7 +80,20 @@ void initialiseGlobalStates(){
 }
 
 // load an img file from disk and create an GL texture obj
+GLuint loadTexture(const char* filePath){
+    int width, height, channels;
 
+    // use stb to load file
+    // stbi_load(const char *filename, int *x, int *y, int *comp, int req_comp)
+    unsigned char* data = stbi_load(filePath, &width, &height, &channels, 4);
+
+    if(!data){
+        printf("Failed to load texture: %s\n", filePath);
+        return 0;
+    }
+    printf("success\n");
+    return 1;
+}
 
 void initialiseSceneResources(){
     // enable a specific light source as the sun(GL_LIGHT0)
@@ -90,7 +103,7 @@ void initialiseSceneResources(){
     
     loadSubmarineFile();
 
-    // sandTexture = loadTexture("/assets/sand.jpg");
+    sandTexture = loadTexture("assets/sand.jpg");
 
 
 }
