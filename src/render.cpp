@@ -148,21 +148,25 @@ void loadSubmarineFile(){
 
 void initialiseSubmarineMaterial(){
     // ambient gray (low brightness)
-    GLfloat ambient[]  = {0.2f, 0.2f, 0.2f, 1.0f};
+    GLfloat ambient[] = {0.2f, 0.2f, 0.2f, 1.0f};
 
     // diffuse gray (main visible color)
-    GLfloat diffuse[]  = {0.6f, 0.6f, 0.6f, 1.0f};
+    GLfloat diffuse[] = {0.6f, 0.6f, 0.6f, 1.0f};
 
     // specular highlight (steel hull has some shine)
     GLfloat specular[] = {0.4f, 0.4f, 0.4f, 1.0f};
 
+    GLfloat emission[] = {0.0f, 0, 0, 1.0f};
+
     // shininess controls highlight size (higher = sharper)
-    GLfloat shininess  = 32.0f;
+    GLfloat shininess = 32.0f;
 
     glMaterialfv(GL_FRONT, GL_AMBIENT,  ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE,  diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
     glMaterialf(GL_FRONT, GL_SHININESS, shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, emission);
+
 }
 
 void drawSubmarine(){
@@ -205,7 +209,24 @@ void drawSubmarine(){
 /*  
     disk should lies on y = -100
 */
+
+// add highly emissive material
+void applySandEmission(){
+    GLfloat ambient[] = {0.30f, 0.25f, 0.15f, 1.0f};  // warm sandy brown
+    GLfloat diffuse[] = {0.70f, 0.65f, 0.45f, 1.0f};  // visible sand color
+    GLfloat specular[] = {0.10f, 0.10f, 0.10f, 1.0f};  // sand is matte, not shiny
+    GLfloat emission[] = {0.1f, 0.08f, 0.04f, 1.0f};  // subtle golden self-light
+    GLfloat shininess = 8.0f;                         // wide dull highlights
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,  ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,  diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emission);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
+
+}
+
 void drawDisk(){
+    applySandEmission();
     // *** The last transform you call affects the object first. ***
     glPushMatrix();
     glTranslatef(0, oceanBottomPos, 0);
@@ -225,6 +246,7 @@ void drawDisk(){
 }
 
 void drawCylinder(){
+    applySandEmission();
     glPushMatrix();
     glTranslatef(0, oceanBottomPos - 50, 0);
     glRotatef(-90, 1, 0, 0);
