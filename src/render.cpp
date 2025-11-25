@@ -16,8 +16,8 @@ GLint stackCount = 60;
 GLint oceanBottomRadius = 1500;
 GLdouble oceanBottomPos = -500;
 
-GLdouble oceanTop = 200;
-GLdouble oceanDepth = 800;
+GLdouble oceanTop = 500;
+GLdouble oceanDepth = 1500;
 /*
     vector vs array:
     vector: java arraylist
