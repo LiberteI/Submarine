@@ -13,16 +13,13 @@ GLfloat cameraOffset = 500;
 GLfloat horizontalAngle;
 GLfloat verticalAngle;
 std::array<GLfloat, 3> currentCamPos;;
-/*  
-    offset angle: [-1/4pi - 1/4pi]
-*/
+
 void computeOffsetAngles(){
-    GLfloat interpolatedHorizontal = curMouseXPos / windowWidth - 0.5; // -0.5 - 0.5
-    GLfloat interpolatedVertical = curMouseYPos / windowHeight - 0.5; // -0.5 - 0.5
-    GLfloat pi = M_PI;
+    GLfloat interpolatedHorizontal = deltaMouseX * mouseSensitivity;
+    GLfloat interpolatedVertical = deltaMouseY * mouseSensitivity;
     
-    horizontalAngle = interpolatedHorizontal * pi;
-    verticalAngle = interpolatedVertical * pi;
+    horizontalAngle += interpolatedHorizontal;
+    verticalAngle += interpolatedVertical;
 
     // clamp vertical angle so that camera will not teleport
     verticalAngle = std::clamp(verticalAngle, -1.5f, 1.5f);

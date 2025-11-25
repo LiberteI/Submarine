@@ -40,3 +40,11 @@ extern bool downHeld;
 
 extern GLfloat curMouseXPos;
 extern GLfloat curMouseYPos;
+
+extern GLfloat lastMouseXPos;
+extern GLfloat lastMouseYPos;
+
+extern GLfloat deltaMouseX;
+extern GLfloat deltaMouseY;
+
+extern GLfloat mouseSensitivity;

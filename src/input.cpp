@@ -16,6 +16,14 @@ std::array<GLfloat, 3> submarinCurrentPos = {0, 0, 0};
 GLfloat curMouseXPos;
 GLfloat curMouseYPos;
 
+GLfloat lastMouseXPos = 0;
+GLfloat lastMouseYPos = 0;
+
+GLfloat deltaMouseX;
+GLfloat deltaMouseY;
+
+GLfloat mouseSensitivity = 0.002;
+
 bool upHeld = false;
 bool downHeld = false;
 
@@ -158,12 +166,17 @@ void specialKeyUp(int key, int, int){
 // (0, height) ---> (width -1, height)
 /*
     interpolate x, y for camera rotation.
-    x E [0, windowWidth] => [leftmost, rightmost]
-    y E [0, windowHeight] => [top, below]
+    use deltaMouse * sensitivity
 */
 void myMousePassiveMotion(int x, int y){
     // mouse control
     curMouseXPos = x;
     curMouseYPos = y;
     // printf("x, y: %f, %f\n" ,curMouseXPos ,curMouseYPos);
+
+    deltaMouseX = curMouseXPos - lastMouseXPos;
+    deltaMouseY = curMouseYPos - lastMouseYPos;
+
+    lastMouseXPos = curMouseXPos;
+    lastMouseYPos = curMouseYPos;
 }
