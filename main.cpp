@@ -105,11 +105,13 @@ GLuint loadTexture(const char* filePath){
     glBindTexture(GL_TEXTURE_2D, texture);
 
     // ***TEXTURE CONFIGURATIONS***
+
+    // to avoid distant distortion and noise
     // void glTexParameteri(GLenum target, GLenum pname, GLint param
     // how the texture is filtered when it is displayed smaller than ori resolution
-    // GL_LINEAR: smooth interpolation between pixels
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
+    // GL_LINEAR: smooth interpolation between pixels
     // how it is filtered if bigger
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -136,7 +138,7 @@ GLuint loadTexture(const char* filePath){
     */
     glTexImage2D(
         GL_TEXTURE_2D,   // 2D texture to upload
-        0,               // no mipmap
+        0,               // mipmap starts at level 0
         GL_RGBA,         // feed RGBA to GPU
         width,           // img width
         height,          // img height
@@ -145,6 +147,8 @@ GLuint loadTexture(const char* filePath){
         GL_UNSIGNED_BYTE,// 1 byte per channel
         data             // pointer to pixel buffer in RAM
     );
+
+    glGenerateMipmap(GL_TEXTURE_2D);
 
     // free CPU side pixel buffer
     stbi_image_free(data);

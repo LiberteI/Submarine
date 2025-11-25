@@ -22,7 +22,7 @@ GLfloat lastMouseYPos = 0;
 GLfloat deltaMouseX;
 GLfloat deltaMouseY;
 
-GLfloat mouseSensitivity = 0.002;
+GLfloat mouseSensitivity = 0.007;
 
 bool upHeld = false;
 bool downHeld = false;
@@ -173,7 +173,7 @@ void myMousePassiveMotion(int x, int y){
     if(firstMouse){
         lastMouseXPos = x;
         lastMouseYPos = y;
-
+        
         firstMouse = false;
         return;
     }

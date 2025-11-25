@@ -12,7 +12,7 @@
 GLfloat cameraOffset = 500;
 GLfloat horizontalAngle = 0;
 GLfloat verticalAngle = 0;
-std::array<GLfloat, 3> currentCamPos = {0, 0 ,cameraOffset};
+std::array<GLfloat, 3> currentCamPos = {0, 40, cameraOffset};
 
 void computeOffsetAngles(){
     GLfloat interpolatedHorizontal = deltaMouseX * mouseSensitivity;
