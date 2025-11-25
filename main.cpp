@@ -91,8 +91,6 @@ void initialiseFog(){
 
     // define fog density 
     glFogf(GL_FOG_DENSITY, 0.0005);
-
-
 }
 
 void initialiseSceneResources(){
