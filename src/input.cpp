@@ -32,6 +32,7 @@ bool sHeld = false;
 bool aHeld = false;
 bool dHeld = false;
 
+bool firstMouse = true;
 // lil helper to record normal window pos and size so that we can recover after
 void recordNormalWindow(){
     windowXPos = glutGet(GLUT_WINDOW_X);
@@ -169,6 +170,13 @@ void specialKeyUp(int key, int, int){
     use deltaMouse * sensitivity
 */
 void myMousePassiveMotion(int x, int y){
+    if(firstMouse){
+        lastMouseXPos = x;
+        lastMouseYPos = y;
+
+        firstMouse = false;
+        return;
+    }
     // mouse control
     curMouseXPos = x;
     curMouseYPos = y;

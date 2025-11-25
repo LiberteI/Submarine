@@ -165,6 +165,8 @@ void initialiseSceneResources(){
     stbi_set_flip_vertically_on_load(true);
 
     sandTexture = loadTexture("assets/sand.jpg");
+
+    
 }
 
 void initialiseCallbackRegistrations(){
