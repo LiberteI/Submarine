@@ -4,5 +4,6 @@ extern GLint windowWidth;
 extern GLint windowHeight;
 extern GLint windowXPos;
 extern GLint windowYPos;
+extern GLuint sandTexture;
 
 void recordNormalWindow();

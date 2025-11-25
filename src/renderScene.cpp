@@ -4,6 +4,7 @@
 #include "../include/render.h"
 #include "../include/input.h"
 #include "../include/lighting.h"
+#include "../include/global.h"
 #include <cmath>
 #include <array>
 #include <algorithm>
@@ -66,11 +67,15 @@ void myDisplay(){
 
     drawOriginDebugger();
 
-    drawSubmarine();
-
+    // --- textured objs
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, sandTexture);
     drawDisk();
 
     drawCylinder();
-
+    
+    // --- untextured obj
+    glDisable(GL_TEXTURE_2D);
+    drawSubmarine();
     glutSwapBuffers();
 }

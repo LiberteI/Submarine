@@ -14,8 +14,9 @@
 #include "include/lighting.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "include/stb_image.h"
+#include "include/global.h"
 
-GLuint sandTexture;
+
 
 void registerInputFuncs(){
     // dump of input functions
