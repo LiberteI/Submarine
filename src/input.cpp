@@ -10,6 +10,8 @@ GLint uPressedTimes = 0;
 
 GLint fPressedTimes = 0;
 
+GLint bPressedTimes = 0;
+
 GLfloat speed = 5;
 std::array<GLfloat, 3> submarinCurrentPos = {0, 0, 0};
 
@@ -87,6 +89,16 @@ void tryMove(){
         submarinCurrentPos[1] -= speed;
     }
 }
+
+void tryToggleFog(){
+    if(bPressedTimes % 2 == 0){
+        glEnable(GL_FOG);
+    }
+    else{
+        glDisable(GL_FOG);
+    }
+}
+
 // screen toggle / polygon mode toggle / quit button
 void myKeyboardDown(unsigned char key, int, int){
     if(key == 'q'){
@@ -100,6 +112,10 @@ void myKeyboardDown(unsigned char key, int, int){
     if(key == 'f'){
         fPressedTimes ++;
         tryResizeWindow();
+    }
+    if(key == 'b'){
+        bPressedTimes ++;
+        tryToggleFog();
     }
     
     if(key == 'w'){

@@ -81,7 +81,6 @@ void initialiseGlobalStates(){
 void initialiseFog(){
     // enable fog
     glEnable(GL_FOG);
-
     // blue
     // ** note a is aborted
     GLfloat fogColor[] = {0.0f, 0.35f, 0.7f, 1};

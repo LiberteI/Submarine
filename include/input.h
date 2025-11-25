@@ -21,6 +21,7 @@ extern GLint windowWidth;
 extern GLint windowHeight;
 extern GLint uPressedTimes;
 extern GLint fPressedTimes;
+extern GLint bPressedTimes;
 
 extern GLint windowXPos;
 extern GLint windowYPos;
