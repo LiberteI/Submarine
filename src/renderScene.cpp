@@ -23,7 +23,10 @@ void computeOffsetAngles(){
 
     // clamp vertical angle so that camera will not teleport
     verticalAngle = std::clamp(verticalAngle, -1.5f, 1.5f);
-
+    
+    // reset deltas so that camera will not spin
+    deltaMouseX = 0;
+    deltaMouseY = 0;
 }
 
 // it is like rotating around a planet in a2
