@@ -156,7 +156,7 @@ void initialiseSubmarineMaterial(){
     // specular highlight (steel hull has some shine)
     GLfloat specular[] = {0.4f, 0.4f, 0.4f, 1.0f};
 
-    GLfloat emission[] = {0.0f, 0, 0, 1.0f};
+    GLfloat emission[] = {0.1f, 0.1f, 0.1f, 1.0f};
 
     // shininess controls highlight size (higher = sharper)
     GLfloat shininess = 32.0f;
