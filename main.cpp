@@ -78,6 +78,23 @@ void initialiseGlobalStates(){
     glEnable(GL_TEXTURE_2D);
 }
 
+void initialiseFog(){
+    // enable fog
+    glEnable(GL_FOG);
+
+    // blue
+    // ** note a is aborted
+    GLfloat fogColor[] = {0.0f, 0.35f, 0.7f, 1};
+    glFogfv(GL_FOG_COLOR, fogColor);
+    
+    // define fog mode as exponential
+    glFogi(GL_FOG_MODE, GL_EXP2);
+
+    // define fog density 
+    glFogf(GL_FOG_DENSITY, 0.0005);
+
+
+}
 
 void initialiseSceneResources(){
     // enable a specific light source as the sun(GL_LIGHT0)
@@ -91,6 +108,8 @@ void initialiseSceneResources(){
     stbi_set_flip_vertically_on_load(true);
 
     sandTexture = loadTexture("assets/sand.jpg");
+
+    initialiseFog();
 }
 
 void initialiseCallbackRegistrations(){
@@ -98,6 +117,7 @@ void initialiseCallbackRegistrations(){
 
     registerInputFuncs();
 }
+
 
 // i try to let main keep the same level of abstraction and i think main is self-explainary
 int main(int argc, char** argv){
