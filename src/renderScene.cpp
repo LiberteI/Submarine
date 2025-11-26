@@ -13,7 +13,22 @@ GLfloat cameraOffset = 500;
 GLfloat horizontalAngle = 0;
 GLfloat verticalAngle = 0;
 std::array<GLfloat, 3> currentCamPos = {0, 40, cameraOffset};
+// v
+GLfloat waveSpeed = 2;
+// A
+GLint waveAmplitude = 30;
+// t
+GLfloat curTime = glutGet(GLUT_ELAPSED_TIME) / 1000;
+// φ
+GLfloat phase = curTime * waveSpeed;
 
+// heightAtVertex = sin(valueBasedOnPosition + phase + timeValue) * waveAmplitude
+// 
+GLfloat computeHeightAtVertex(){
+    GLfloat heightToReturn = 0;
+
+    return heightToReturn;
+}
 void computeOffsetAngles(){
     GLfloat interpolatedHorizontal = deltaMouseX * mouseSensitivity;
     GLfloat interpolatedVertical = deltaMouseY * mouseSensitivity;
@@ -68,7 +83,7 @@ void myDisplay(){
     drawOriginDebugger();
 
     drawSurface();
-    
+
     // --- textured objs
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, sandTexture);

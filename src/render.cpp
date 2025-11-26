@@ -7,6 +7,7 @@
 #include <array>
 #include "../include/input.h"
 #include "../include/stb_image.h"
+#include "../include/renderScene.h"
 
 GLUquadric* quad;
 
@@ -365,16 +366,16 @@ void generateSurface(){
     for(int z = 0; z < oceanSurfaceVertexCount; z ++){
         
         for(int x = 0; x < oceanSurfaceVertexCount; x ++){
-            GLfloat oceanVertexX = (x - indexHalf) * oceanSurfaceUnitLength;
-            GLfloat oceanVertexY = 0;
             GLfloat oceanVertexZ = (z - indexHalf) * oceanSurfaceUnitLength;
-
+            GLfloat oceanVertexX = (x - indexHalf) * oceanSurfaceUnitLength;
+            GLfloat oceanVertexY = computeHeightAtVertex();
+        
             oceanSurfaceVertices.push_back({oceanVertexX, oceanVertexY, oceanVertexZ});
         }
     }
 }
 
-// heightAtVertex = sin(valueBasedOnPosition + phase + timeValue) * waveAmplitude
+
 void drawSurface(){
     glPushMatrix();
     glTranslatef(0, 720, 0);
