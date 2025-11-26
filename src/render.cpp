@@ -376,10 +376,13 @@ void generateSurface(){
 
 // heightAtVertex = sin(valueBasedOnPosition + phase + timeValue) * waveAmplitude
 void drawSurface(){
+    glPushMatrix();
+    glTranslatef(0, 720, 0);
     glPointSize(5);
     glBegin(GL_POINTS);
         for(const auto& vertex : oceanSurfaceVertices){
             glVertex3fv(vertex.data());
         }
     glEnd();
+    glPopMatrix();
 }
