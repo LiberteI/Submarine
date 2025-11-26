@@ -9,3 +9,5 @@ GLint windowYPos = 0;
 GLuint sandTexture;
 
 GLuint oceanShaderProgram;
+
+GLint modelLocation;

@@ -112,8 +112,13 @@ void initialiseSceneResources(){
 
     uploadSurfaceToGPU();
 
+    // compile glsl programs
     oceanShaderProgram = createProgram("glsl/ocean.frag", "glsl/ocean.vert");
     
+    // make current with glUseProgram
+    glUseProgram(oceanShaderProgram);
+    
+    modelLocation = glGetUniformLocation(oceanShaderProgram, "model");
 }
 
 void initialiseCallbackRegistrations(){
