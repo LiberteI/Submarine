@@ -387,21 +387,26 @@ void generateSurfaceVertices(){
     C, D
 */
 // create index buffer : cpu side EBO
+// flat 1d arraylist
 void generateSurfaceMesh(){
     for(int z = 0; z < oceanSurfaceVertexCount - 1; z++){
         for(int x = 0; x < oceanSurfaceVertexCount - 1; x++){
 
             // compute a unit square index collection
+            // mapping from 2d (x, z) -> 1d index
+            // index = row * row_length + col
             int vertexAIndex = z * oceanSurfaceVertexCount + x;
             int vertexBIndex = vertexAIndex + 1;
             int vertexCIndex = (z + 1) * oceanSurfaceVertexCount + x;
             int vertexDIndex = vertexCIndex + 1;
 
             // following triangle order for future drawing
+            // COUNTER CLOCKWISE
+            // triangle A -> B -> D
             oceanSurfaceIndices.push_back(vertexAIndex);
             oceanSurfaceIndices.push_back(vertexBIndex);
             oceanSurfaceIndices.push_back(vertexDIndex);
-            
+            // triangle A -> D -> C
             oceanSurfaceIndices.push_back(vertexAIndex);
             oceanSurfaceIndices.push_back(vertexDIndex);
             oceanSurfaceIndices.push_back(vertexCIndex);
@@ -412,35 +417,80 @@ void generateSurfaceMesh(){
 /*  
     VB0: Vertex buffer object : a box of vertex numbers
     EBO: element buffer object : indices for vertices
-    VAO: vertex array object : how vertex data is structured (instruction)
+    VAO: vertex array object : how vertex data is structured 
 */
+
+/*
+    VAO remembers:
+
+    1. Which VBO to read vertices from
+
+    2. Which EBO to read indices from
+
+    3. How many floats per attribute
+
+    4. How to stride through vertices
+
+    5. Which attributes are enabled
+*/
+
+// upload vertices + indices to GPU
 void uploadSurfaceToGPU(){
+    // call to generate vertices and corresponding indices
+    // stored in RAM
     generateSurfaceVertices();
     generateSurfaceMesh();
-
+    
+    // request one vertex buffer obj
     glGenVertexArrays(1, &VAO);
+    // all buffer bindings and attribute definitions are stored inside VAO
     glBindVertexArray(VAO);
 
     // upload VBO
+    // create a GPU buffer obj for vertex data
     glGenBuffers(1, &VBO);
+    // bind
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    /*
+        glBufferData(
+            target, 
+            size_in_bytes,  
+            pointer_to_data, 
+            usage_hint (static | dynamic | stream)
+        );
+    */
     glBufferData(
-        GL_ARRAY_BUFFER,
-        oceanSurfaceVertices.size() * sizeof(std::array<GLfloat,3>),
-        oceanSurfaceVertices.data(),
-        GL_STATIC_DRAW
+        GL_ARRAY_BUFFER, // array buffer
+        oceanSurfaceVertices.size() * sizeof(std::array<GLfloat,3>), // whole size of the std::vector
+        oceanSurfaceVertices.data(), // the data sent to GPU
+        GL_STATIC_DRAW // rarely updated
     );
 
     // upload EBO
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+
     glBufferData(
-        GL_ELEMENT_ARRAY_BUFFER,
-        oceanSurfaceIndices.size() * sizeof(GLuint),
-        oceanSurfaceIndices.data(),
+        GL_ELEMENT_ARRAY_BUFFER, // EBO buffer type
+        oceanSurfaceIndices.size() * sizeof(GLuint), // total size
+        oceanSurfaceIndices.data(), // its data
         GL_STATIC_DRAW
     );
 
+    /*
+        glVertexAttribPointer(
+
+
+        );
+    */
+//  void glVertexAttribPointer(
+//          GLuint index,   // 0 = position | 1 = normal | 2 = UV(texture coordinate)
+//          GLint size,     // how many components this attribute has
+//          GLenum type,    // type of each component
+//          GLboolean normalized,   // for pos always false
+//          GLsizei stride,   // size of [x, y, z]
+//          const void *pointer //pos offset
+//  );
     glVertexAttribPointer(
         0,
         3,
@@ -449,14 +499,26 @@ void uploadSurfaceToGPU(){
         sizeof(std::array<GLfloat,3>),
         (void*)0
     );
-
+    // activate the vertex attribute stream at location 0.
     glEnableVertexAttribArray(0);
 
+    // stop recording VAO
     glBindVertexArray(0);
 }
 
+// called every frame
 void drawOceanSurface(){
+    // start record VAO
     glBindVertexArray(VAO);
 
+    /*
+        void glDrawElements(
+            GLenum mode,        // drawing mode
+            GLsizei count,      // how many indices to read from EBO
+            GLenum type,        // each index's type
+            const void *indices // offset
+        )
+    */
+   
     glDrawElements(GL_TRIANGLES, oceanSurfaceIndices.size(), GL_UNSIGNED_INT, 0);
 }
