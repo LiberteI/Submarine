@@ -16,8 +16,15 @@ GLint stackCount = 60;
 GLint oceanBottomRadius = 1500;
 GLdouble oceanBottomPos = -500;
 
+GLfloat fractalUnitLength = 50;
+// subdivide the surface into 50 * 50 pieces
+GLint oceanSurfaceFractalCount = 50;
+std::vector<std::array<GLfloat, 2>> oceanSurfaceVertexList;
+
 GLdouble oceanTop = 500;
 GLdouble oceanDepth = 1500;
+
+
 /*
     vector vs array:
     vector: java arraylist
@@ -343,4 +350,13 @@ GLuint loadTexture(const char* filePath){
 
     // return OpenGL texture ID
     return texture;
+}
+
+std::vector<GLfloat> subdivideSurface(){
+
+}
+
+// heightAtVertex = sin(valueBasedOnPosition + phase + timeValue) * waveAmplitude
+void drawSurface(){
+    
 }
