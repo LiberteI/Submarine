@@ -7,6 +7,8 @@ void loadSubmarineFile();
 void drawDisk();
 void drawCylinder();
 GLuint loadTexture(const char* filePath);
+void drawSurface();
+void generateSurface();
 
 extern GLUquadric* quad;
 

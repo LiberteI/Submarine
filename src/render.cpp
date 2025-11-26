@@ -16,10 +16,10 @@ GLint stackCount = 60;
 GLint oceanBottomRadius = 1500;
 GLdouble oceanBottomPos = -500;
 
-GLfloat fractalUnitLength = 50;
+GLfloat oceanSurfaceUnitLength = 50;
 // subdivide the surface into 50 * 50 pieces
-GLint oceanSurfaceFractalCount = 50;
-std::vector<std::array<GLfloat, 2>> oceanSurfaceVertexList;
+GLint oceanSurfaceVertexCount = 51;
+std::vector<std::array<GLfloat, 3>> oceanSurfaceVertices;
 
 GLdouble oceanTop = 500;
 GLdouble oceanDepth = 1500;
@@ -352,11 +352,34 @@ GLuint loadTexture(const char* filePath){
     return texture;
 }
 
-std::vector<GLfloat> subdivideSurface(){
+/*
+    1. use oceanSurfaceVertexCount = stripe, odd. 
+    2. define origin1 (x, z) = (0, 0) -> world space(x - n / 2 * unitLength, z - n / 2 * unitLength)
+    3. loop from z = 0, x = 0, 1, 2, ... ,n - 1, take adjacent vertices to draw 2 triangles. 
+    4. then z = 1, 2, 3, ... , n - 1, repeat step 3.
+    5. ** convert 2d index(x, z) to 1d index: index = z * stripe + x.
+    6. calculate world space vertices and store them to surfaceVertices
+*/ 
+void generateSurface(){
+    GLint indexHalf = oceanSurfaceVertexCount / 2;
+    for(int z = 0; z < oceanSurfaceVertexCount; z ++){
+        
+        for(int x = 0; x < oceanSurfaceVertexCount; x ++){
+            GLfloat oceanVertexX = (x - indexHalf) * oceanSurfaceUnitLength;
+            GLfloat oceanVertexY = 0;
+            GLfloat oceanVertexZ = (z - indexHalf) * oceanSurfaceUnitLength;
 
+            oceanSurfaceVertices.push_back({oceanVertexX, oceanVertexY, oceanVertexZ});
+        }
+    }
 }
 
 // heightAtVertex = sin(valueBasedOnPosition + phase + timeValue) * waveAmplitude
 void drawSurface(){
-    
+    glPointSize(5);
+    glBegin(GL_POINTS);
+        for(const auto& vertex : oceanSurfaceVertices){
+            glVertex3fv(vertex.data());
+        }
+    glEnd();
 }

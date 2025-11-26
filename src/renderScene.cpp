@@ -67,6 +67,8 @@ void myDisplay(){
 
     drawOriginDebugger();
 
+    drawSurface();
+    
     // --- textured objs
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, sandTexture);
@@ -77,5 +79,6 @@ void myDisplay(){
     // --- untextured obj
     glDisable(GL_TEXTURE_2D);
     drawSubmarine();
+    
     glutSwapBuffers();
 }

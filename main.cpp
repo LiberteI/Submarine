@@ -107,6 +107,8 @@ void initialiseSceneResources(){
     sandTexture = loadTexture("assets/sand.jpg");
 
     initialiseFog();
+
+    generateSurface();
 }
 
 void initialiseCallbackRegistrations(){
