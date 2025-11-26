@@ -26,7 +26,8 @@ std::vector<GLint> oceanSurfaceIndices;
 GLdouble oceanTop = 500;
 GLdouble oceanDepth = 1500;
 
-
+GLuint VBO;
+GLuint EBO;
 
 
 /*
@@ -406,12 +407,35 @@ void generateSurfaceMesh(){
     }
 }
 
-
 /*  
     VB0: Vertex buffer object : a box of vertex numbers
     EBO: element buffer object : indices for vertices
     VAO: vertex array object : how vertex data is structured (instruction)
 */
+void uploadSurfaceToGPU(){
+    generateSurfaceVertices();
+    generateSurfaceMesh();
+
+    // upload VBO
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(
+        GL_ARRAY_BUFFER,
+        oceanSurfaceVertices.size() * sizeof(std::array<GLfloat,3>),
+        oceanSurfaceVertices.data(),
+        GL_STATIC_DRAW
+    );
+
+    // upload EBO
+    glGenBuffers(1, &EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(
+        GL_ELEMENT_ARRAY_BUFFER,
+        oceanSurfaceIndices.size() * sizeof(GLuint),
+        oceanSurfaceIndices.data(),
+        GL_STATIC_DRAW
+    );
+}
 void drawOceanSurface(){
     // glBindVertexArray(oceanVAO);
 
