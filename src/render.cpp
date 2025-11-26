@@ -448,18 +448,7 @@ void createVertexBufferObj(){
     glGenBuffers(1, &VBO);
     // bind
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-}
 
-// upload vertices + indices to GPU
-void uploadSurfaceToGPU(){
-    // call to generate vertices and corresponding indices
-    // stored in RAM
-    generateSurfaceVertices();
-    generateSurfaceMesh();
-    
-    createVertexArrayObj();
-
-    createVertexBufferObj();
     /*
         glBufferData(
             target, 
@@ -474,7 +463,9 @@ void uploadSurfaceToGPU(){
         oceanSurfaceVertices.data(), // the data sent to GPU
         GL_STATIC_DRAW // rarely updated
     );
+}
 
+void createElementBufferObj(){
     // upload EBO
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -485,13 +476,24 @@ void uploadSurfaceToGPU(){
         oceanSurfaceIndices.data(), // its data
         GL_STATIC_DRAW
     );
+}
 
-    /*
-        glVertexAttribPointer(
+// upload vertices + indices to GPU
+void uploadSurfaceToGPU(){
+    // call to generate vertices and corresponding indices
+    // stored in RAM
+    generateSurfaceVertices();
+    generateSurfaceMesh();
+    
+    // VAO
+    createVertexArrayObj();
 
-
-        );
-    */
+    // VBO
+    createVertexBufferObj();
+    
+    // EBO
+    createElementBufferObj();
+    
 //  void glVertexAttribPointer(
 //          GLuint index,   // 0 = position | 1 = normal | 2 = UV(texture coordinate)
 //          GLint size,     // how many components this attribute has
@@ -500,6 +502,8 @@ void uploadSurfaceToGPU(){
 //          GLsizei stride,   // size of [x, y, z]
 //          const void *pointer //pos offset
 //  );
+
+    // instruct GPU how to read raw vertex data
     glVertexAttribPointer(
         0,
         3,
