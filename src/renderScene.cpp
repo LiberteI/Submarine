@@ -24,9 +24,11 @@ GLfloat phase = curTime * waveSpeed;
 
 // heightAtVertex = sin(valueBasedOnPosition + phase + timeValue) * waveAmplitude
 // 
-GLfloat computeHeightAtVertex(){
+GLfloat computeHeightAtVertex(GLfloat x, GLfloat z){
     GLfloat heightToReturn = 0;
 
+    heightToReturn = (sin(x + phase + curTime) + sin(z + phase + curTime)) * waveAmplitude;
+    
     return heightToReturn;
 }
 void computeOffsetAngles(){

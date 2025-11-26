@@ -368,7 +368,7 @@ void generateSurface(){
         for(int x = 0; x < oceanSurfaceVertexCount; x ++){
             GLfloat oceanVertexZ = (z - indexHalf) * oceanSurfaceUnitLength;
             GLfloat oceanVertexX = (x - indexHalf) * oceanSurfaceUnitLength;
-            GLfloat oceanVertexY = computeHeightAtVertex();
+            GLfloat oceanVertexY = computeHeightAtVertex(oceanVertexX, oceanVertexZ);
         
             oceanSurfaceVertices.push_back({oceanVertexX, oceanVertexY, oceanVertexZ});
         }

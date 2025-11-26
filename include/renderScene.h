@@ -6,7 +6,7 @@ void sychronizeCameraWithSubmarine();
 
 void computeCurCamPos();
 
-GLfloat computeHeightAtVertex();
+GLfloat computeHeightAtVertex(GLfloat x, GLfloat z);
 
 extern std::array<GLfloat, 3> cameraCurrentPos;
 
