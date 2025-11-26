@@ -13,6 +13,7 @@ GLfloat cameraOffset = 500;
 GLfloat horizontalAngle = 0;
 GLfloat verticalAngle = 0;
 std::array<GLfloat, 3> currentCamPos = {0, 40, cameraOffset};
+
 // v
 GLfloat waveSpeed = 2;
 // A
@@ -21,14 +22,16 @@ GLint waveAmplitude = 30;
 GLfloat curTime = glutGet(GLUT_ELAPSED_TIME) / 1000;
 // φ
 GLfloat phase = curTime * waveSpeed;
+// f
+GLfloat frequency = 0.1;
 
 // heightAtVertex = sin(valueBasedOnPosition + phase + timeValue) * waveAmplitude
 // 
 GLfloat computeHeightAtVertex(GLfloat x, GLfloat z){
     GLfloat heightToReturn = 0;
 
-    heightToReturn = (sin(x + phase + curTime) + sin(z + phase + curTime)) * waveAmplitude;
-    
+    heightToReturn = sin(( x + z ) * frequency + phase ) * waveAmplitude;
+
     return heightToReturn;
 }
 void computeOffsetAngles(){
