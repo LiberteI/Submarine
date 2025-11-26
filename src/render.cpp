@@ -415,9 +415,11 @@ void generateSurfaceMesh(){
 }
 
 /*  
-    VB0: Vertex buffer object : a box of vertex numbers
-    EBO: element buffer object : indices for vertices
     VAO: vertex array object : how vertex data is structured 
+
+    VB0: Vertex buffer object : a box of vertex numbers
+
+    EBO: element buffer object : indices for vertices
 */
 
 /*
@@ -434,6 +436,20 @@ void generateSurfaceMesh(){
     5. Which attributes are enabled
 */
 
+void createVertexArrayObj(){
+    // request one vertex buffer obj
+    glGenVertexArrays(1, &VAO);
+    // all buffer bindings and attribute definitions are stored inside VAO
+    glBindVertexArray(VAO);
+}
+
+void createVertexBufferObj(){
+    // create a GPU buffer obj for vertex data
+    glGenBuffers(1, &VBO);
+    // bind
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+}
+
 // upload vertices + indices to GPU
 void uploadSurfaceToGPU(){
     // call to generate vertices and corresponding indices
@@ -441,16 +457,9 @@ void uploadSurfaceToGPU(){
     generateSurfaceVertices();
     generateSurfaceMesh();
     
-    // request one vertex buffer obj
-    glGenVertexArrays(1, &VAO);
-    // all buffer bindings and attribute definitions are stored inside VAO
-    glBindVertexArray(VAO);
+    createVertexArrayObj();
 
-    // upload VBO
-    // create a GPU buffer obj for vertex data
-    glGenBuffers(1, &VBO);
-    // bind
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    createVertexBufferObj();
     /*
         glBufferData(
             target, 
