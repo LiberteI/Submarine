@@ -8,6 +8,10 @@
 #include "../include/input.h"
 #include "../include/stb_image.h"
 #include "../include/renderScene.h"
+#include "../include/global.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 
 GLUquadric* quad;
@@ -545,12 +549,22 @@ GLuint createProgram(const char* vertexShaderSrc, const char* fragShaderSrc){
 
 }
 
+
+
 // called every frame
 void drawOceanSurface(){
+    // bind shader
+    glUseProgram(oceanShaderProgram);
+
+    // every frame before drawing:
+    // 1. load identity:
+    glm::mat4 model = glm::mat4(1.0f);
+    // translate up 720 units along Y
+    model = glm::translate(model,glm::vec3(0, 720.0f, 0));
+
+    glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
     // start record VAO
-
     glBindVertexArray(VAO);
-
     /*
         void glDrawElements(
             GLenum mode,        // drawing mode
