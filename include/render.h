@@ -9,6 +9,7 @@ void drawCylinder();
 GLuint loadTexture(const char* filePath);
 void drawOceanSurface();
 void generateSurfaceMesh();
+GLuint createProgram(const char* vertexShaderSrc, const char* fragShaderSrc);
 
 extern GLUquadric* quad;
 

@@ -519,6 +519,32 @@ void uploadSurfaceToGPU(){
     glBindVertexArray(0);
 }
 
+GLuint compileShader(GLenum type, const char* src){
+    GLuint shader = glCreateShader(type);
+
+    glShaderSource(shader, 1, &src, nullptr);
+
+    glCompileShader(shader);
+
+    return shader;
+}
+
+GLuint createProgram(const char* vertexShaderSrc, const char* fragShaderSrc){
+    GLuint vs = compileShader(GL_VERTEX_SHADER, vertexShaderSrc);
+    GLuint fs = compileShader(GL_FRAGMENT_SHADER, fragShaderSrc);
+
+    GLuint program = glCreateProgram();
+    glAttachShader(program, vs);
+    glAttachShader(program, fs);
+    glLinkProgram(program);
+
+    glDeleteShader(vs);
+    glDeleteShader(fs);
+
+    return program;
+
+}
+
 // called every frame
 void drawOceanSurface(){
     // start record VAO

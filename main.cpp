@@ -16,6 +16,8 @@
 #include "include/stb_image.h"
 #include "include/global.h"
 
+GLuint oceanShaderProgram;
+
 void registerInputFuncs(){
     // dump of input functions
     glutKeyboardFunc(myKeyboardDown);
@@ -110,6 +112,8 @@ void initialiseSceneResources(){
 
     uploadSurfaceToGPU();
 
+    oceanShaderProgram = createProgram("glsl/ocean.frag", "glsl/ocean.vert");
+    
 }
 
 void initialiseCallbackRegistrations(){
