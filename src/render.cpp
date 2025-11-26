@@ -21,9 +21,12 @@ GLfloat oceanSurfaceUnitLength = 60;
 // subdivide the surface into stripe - 1 pieces
 GLint oceanSurfaceVertexCount = 101;
 std::vector<std::array<GLfloat, 3>> oceanSurfaceVertices;
+std::vector<GLint> oceanSurfaceIndices;
 
 GLdouble oceanTop = 500;
 GLdouble oceanDepth = 1500;
+
+
 
 
 /*
@@ -361,7 +364,7 @@ GLuint loadTexture(const char* filePath){
     5. ** convert 2d index(x, z) to 1d index: index = z * stripe + x.
     6. calculate world space vertices and store them to surfaceVertices
 */ 
-void generateSurface(){
+void generateSurfaceVertices(){
     GLint indexHalf = oceanSurfaceVertexCount / 2;
     for(int z = 0; z < oceanSurfaceVertexCount; z ++){
         
@@ -375,13 +378,42 @@ void generateSurface(){
     }
 }
 
+/*
+    The unit squre: 
+    A, B
+    C, D
+*/
+// create index buffer : cpu side EBO
+void generateSurfaceMesh(){
+    for(int z = 0; z < oceanSurfaceVertexCount - 1; z++){
+        for(int x = 0; x < oceanSurfaceVertexCount - 1; x++){
+
+            // compute a unit square index collection
+            int vertexAIndex = z * oceanSurfaceVertexCount + x;
+            int vertexBIndex = vertexAIndex + 1;
+            int vertexCIndex = (z + 1) * oceanSurfaceVertexCount + x;
+            int vertexDIndex = vertexCIndex + 1;
+
+            // following triangle order for future drawing
+            oceanSurfaceIndices.push_back(vertexAIndex);
+            oceanSurfaceIndices.push_back(vertexBIndex);
+            oceanSurfaceIndices.push_back(vertexDIndex);
+            
+            oceanSurfaceIndices.push_back(vertexAIndex);
+            oceanSurfaceIndices.push_back(vertexDIndex);
+            oceanSurfaceIndices.push_back(vertexCIndex);
+        }
+    }
+}
 
 
 /*  
     VB0: Vertex buffer object : a box of vertex numbers
     EBO: element buffer object : indices for vertices
-    VAO: vertex array object : how vertex data is structured
+    VAO: vertex array object : how vertex data is structured (instruction)
 */
 void drawOceanSurface(){
-    glBindVertexArray()
+    // glBindVertexArray(oceanVAO);
+
+    // glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0)
 }

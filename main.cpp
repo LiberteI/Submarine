@@ -108,7 +108,7 @@ void initialiseSceneResources(){
 
     initialiseFog();
 
-    generateSurface();
+    
 }
 
 void initialiseCallbackRegistrations(){
