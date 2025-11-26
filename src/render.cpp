@@ -335,7 +335,7 @@ GLuint loadTexture(const char* filePath){
     glTexImage2D(
         GL_TEXTURE_2D,   // 2D texture to upload
         0,               // mipmap starts at level 0
-        GL_RGBA,         // feed RGBA to GPU
+        GL_RGBA,         // freed RGBA to GPU
         width,           // img width
         height,          // img height
         0,               // border = 0
@@ -368,7 +368,7 @@ void generateSurface(){
         for(int x = 0; x < oceanSurfaceVertexCount; x ++){
             GLfloat oceanVertexZ = (z - indexHalf) * oceanSurfaceUnitLength;
             GLfloat oceanVertexX = (x - indexHalf) * oceanSurfaceUnitLength;
-            GLfloat oceanVertexY = computeHeightAtVertex(oceanVertexX, oceanVertexZ);
+            GLfloat oceanVertexY = 0;
         
             oceanSurfaceVertices.push_back({oceanVertexX, oceanVertexY, oceanVertexZ});
         }
