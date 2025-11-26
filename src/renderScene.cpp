@@ -30,6 +30,8 @@ GLfloat frequency = 0.1;
 GLfloat computeHeightAtVertex(GLfloat x, GLfloat z){
     GLfloat heightToReturn = 0;
 
+    // k = 2pi / mu
+    // Asin(kx + φ) + offset
     heightToReturn = sin(( x + z ) * frequency + phase ) * waveAmplitude;
 
     return heightToReturn;
