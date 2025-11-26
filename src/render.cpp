@@ -522,6 +522,8 @@ void uploadSurfaceToGPU(){
 // called every frame
 void drawOceanSurface(){
     // start record VAO
+    glPushMatrix();
+    glTranslatef(0, 720.0f, 0);
     glBindVertexArray(VAO);
 
     /*
@@ -532,6 +534,7 @@ void drawOceanSurface(){
             const void *indices // offset
         )
     */
-   
+    
     glDrawElements(GL_TRIANGLES, oceanSurfaceIndices.size(), GL_UNSIGNED_INT, 0);
+    glPopMatrix();
 }
