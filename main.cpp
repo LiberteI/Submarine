@@ -16,7 +16,7 @@
 #include "include/stb_image.h"
 #include "include/global.h"
 
-GLuint oceanShaderProgram;
+
 
 void registerInputFuncs(){
     // dump of input functions

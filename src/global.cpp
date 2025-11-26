@@ -8,3 +8,4 @@ GLint windowXPos = 0;
 GLint windowYPos = 0;
 GLuint sandTexture;
 
+GLuint oceanShaderProgram;
