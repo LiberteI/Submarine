@@ -1,5 +1,5 @@
 #define GL_SILENCE_DEPRECATION
-
+#include <GL/glew.h>
 #include <GLUT/glut.h>
 #include <stdlib.h>
 #include <cstdio>
@@ -108,7 +108,8 @@ void initialiseSceneResources(){
 
     initialiseFog();
 
-    
+    uploadSurfaceToGPU();
+
 }
 
 void initialiseCallbackRegistrations(){
@@ -117,6 +118,10 @@ void initialiseCallbackRegistrations(){
     registerInputFuncs();
 }
 
+void initialiseGLEW(){
+    glewExperimental = GL_TRUE;
+    glewInit();
+}
 
 // i try to let main keep the same level of abstraction and i think main is self-explainary
 int main(int argc, char** argv){
@@ -124,6 +129,8 @@ int main(int argc, char** argv){
     glutInit(&argc, argv);
     initialiseBuffer();
     initialiseWindow();
+
+    initialiseGLEW();
 
     initialiseGlobalStates();
   

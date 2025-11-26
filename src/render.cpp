@@ -451,10 +451,12 @@ void uploadSurfaceToGPU(){
     );
 
     glEnableVertexAttribArray(0);
+
+    glBindVertexArray(0);
 }
 
 void drawOceanSurface(){
-    // glBindVertexArray(oceanVAO);
+    glBindVertexArray(VAO);
 
-    // glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0)
+    glDrawElements(GL_TRIANGLES, oceanSurfaceIndices.size(), GL_UNSIGNED_INT, 0);
 }

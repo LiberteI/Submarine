@@ -89,7 +89,7 @@ void myDisplay(){
 
     drawOriginDebugger();
 
-    // drawSurface();
+    drawOceanSurface();
 
     // --- textured objs
     glEnable(GL_TEXTURE_2D);

@@ -7,8 +7,8 @@ void loadSubmarineFile();
 void drawDisk();
 void drawCylinder();
 GLuint loadTexture(const char* filePath);
-void drawSurface();
-void generateSurface();
+void drawOceanSurface();
+void generateSurfaceMesh();
 
 extern GLUquadric* quad;
 
@@ -19,3 +19,5 @@ extern std::vector<std::array<GLfloat, 3>> submarineVertexList;
 extern std::vector<std::array<GLfloat, 3>> submarineNormalList;
 
 extern GLint oceanBottomRadius;
+
+extern void uploadSurfaceToGPU();
