@@ -379,10 +379,39 @@ void drawSurface(){
     glPushMatrix();
     glTranslatef(0, 720, 0);
     glPointSize(5);
+    // debugger
     glBegin(GL_POINTS);
         for(const auto& vertex : oceanSurfaceVertices){
             glVertex3fv(vertex.data());
         }
     glEnd();
+    // mesh
+    /*  
+                D -> C
+                A -> B
+    */
+    // draw mesh triangles
+    glBegin(GL_TRIANGLES);
+    for(int z = 0; z < oceanSurfaceVertexCount - 1; z++){
+        for(int x = 0; x < oceanSurfaceVertexCount - 1; x++){
+
+            int idxA = z * oceanSurfaceVertexCount + x;
+            int idxB = idxA + 1;
+            int idxD = (z + 1) * oceanSurfaceVertexCount + x;
+            int idxC = idxD + 1;
+
+            // triangle 1: A -> D -> B
+            glVertex3fv(oceanSurfaceVertices[idxA].data());
+            glVertex3fv(oceanSurfaceVertices[idxD].data());
+            glVertex3fv(oceanSurfaceVertices[idxB].data());
+
+            // triangle 2: B -> D -> C
+            glVertex3fv(oceanSurfaceVertices[idxB].data());
+            glVertex3fv(oceanSurfaceVertices[idxD].data());
+            glVertex3fv(oceanSurfaceVertices[idxC].data());
+        }
+    }
+    glEnd();
+    
     glPopMatrix();
 }
