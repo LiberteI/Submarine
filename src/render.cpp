@@ -16,7 +16,7 @@ GLint stackCount = 60;
 GLint oceanBottomRadius = 1500;
 GLdouble oceanBottomPos = -500;
 
-GLfloat oceanSurfaceUnitLength = 50;
+GLfloat oceanSurfaceUnitLength = 60;
 // subdivide the surface into 50 * 50 pieces
 GLint oceanSurfaceVertexCount = 51;
 std::vector<std::array<GLfloat, 3>> oceanSurfaceVertices;
