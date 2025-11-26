@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-opengl",
+      "type": "shell",
+      "command": "clang++",
+      "args": [
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+
+        "-I/opt/homebrew/include",
+        "-L/opt/homebrew/lib",
+
+        "main.cpp",
+        "src/*.cpp",
+
+        "-o",
+        "app",
+
+        "-lGLEW",
+
+        "-framework", "OpenGL",
+        "-framework", "GLUT"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Build OpenGL with GLUT + GLEW"
+    }
+  ]
+}

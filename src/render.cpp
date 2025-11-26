@@ -1,5 +1,5 @@
 #define GL_SILENCE_DEPRECATION
-
+#include <GL/glew.h>
 #include <GLUT/glut.h>
 #include <vector>
 #include <fstream>
@@ -8,6 +8,7 @@
 #include "../include/input.h"
 #include "../include/stb_image.h"
 #include "../include/renderScene.h"
+
 
 GLUquadric* quad;
 
@@ -26,6 +27,7 @@ std::vector<GLint> oceanSurfaceIndices;
 GLdouble oceanTop = 500;
 GLdouble oceanDepth = 1500;
 
+GLuint VAO;
 GLuint VBO;
 GLuint EBO;
 
@@ -416,6 +418,9 @@ void uploadSurfaceToGPU(){
     generateSurfaceVertices();
     generateSurfaceMesh();
 
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+
     // upload VBO
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -435,7 +440,19 @@ void uploadSurfaceToGPU(){
         oceanSurfaceIndices.data(),
         GL_STATIC_DRAW
     );
+
+    glVertexAttribPointer(
+        0,
+        3,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(std::array<GLfloat,3>),
+        (void*)0
+    );
+
+    glEnableVertexAttribArray(0);
 }
+
 void drawOceanSurface(){
     // glBindVertexArray(oceanVAO);
 
