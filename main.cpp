@@ -84,7 +84,7 @@ void initialiseFog(){
     // enable fog
     glEnable(GL_FOG);
     // blue
-    // ** note a is aborted
+    // ** note A is aborted
     GLfloat fogColor[] = {0.0f, 0.35f, 0.7f, 1};
     glFogfv(GL_FOG_COLOR, fogColor);
     
@@ -117,9 +117,13 @@ void initialiseSceneResources(){
     oceanShaderProgram = createProgram("glsl/ocean.vert", "glsl/ocean.frag");
     
     // make current with glUseProgram
-    glUseProgram(oceanShaderProgram);
-    
-    modelLocation = glGetUniformLocation(oceanShaderProgram, "model");
+    if(oceanShaderProgram != 0){
+        glUseProgram(oceanShaderProgram);
+        modelLocation = glGetUniformLocation(oceanShaderProgram, "model");
+    }
+    else{
+        printf("Ocean shader failed to compile/link, falling back to fixed pipeline rendering.\n");
+    }
 }
 
 void initialiseCallbackRegistrations(){

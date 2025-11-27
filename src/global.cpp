@@ -10,4 +10,4 @@ GLuint sandTexture;
 
 GLuint oceanShaderProgram;
 
-GLint modelLocation;
+GLint modelLocation = -1;

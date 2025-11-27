@@ -613,16 +613,12 @@ GLuint createProgram(const char* vertexShaderPath, const char* fragShaderPath){
 
 // called every frame
 void drawOceanSurface(){
+    if(oceanShaderProgram == 0){
+        return;
+    }
     // bind shader
     glUseProgram(oceanShaderProgram);
 
-    // every frame before drawing:
-    // 1. load identity:
-    glm::mat4 model = glm::mat4(1.0f);
-    // translate up 720 units along Y
-    model = glm::translate(model,glm::vec3(0, 720.0f, 0));
-
-    glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
     // start record VAO
     glBindVertexArray(VAO);
     /*
@@ -635,5 +631,8 @@ void drawOceanSurface(){
     */
     
     glDrawElements(GL_TRIANGLES, oceanSurfaceIndices.size(), GL_UNSIGNED_INT, 0);
-    
+
+    // restore state so fixed-function drawing continues to work
+    glBindVertexArray(0);
+    glUseProgram(0);
 }
