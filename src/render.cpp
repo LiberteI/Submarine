@@ -546,7 +546,17 @@ GLuint compileShader(GLenum type, const char* src){
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
 
     if(!success){
-        printf("fail to compile shader\n");
+        GLint len = 0;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
+
+        std::vector<char> log(len);
+        glGetShaderInfoLog(shader, len, nullptr, log.data());
+
+        printf("\n=== Shader Compile Error (%s) ===\n%s\n\n",
+            type == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT",
+            log.data());
+
+        glDeleteShader(shader);
         return 0;
     }
 
@@ -578,7 +588,17 @@ GLuint createProgram(const char* vertexShaderPath, const char* fragShaderPath){
     glGetProgramiv(program, GL_LINK_STATUS, &success);
 
     if(!success){
-        printf("program link error\n");
+        GLint len = 0;
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &len);
+
+        std::vector<char> log(len);
+        glGetProgramInfoLog(program, len, nullptr, log.data());
+
+        printf("\n=== Program Link Error ===\n%s\n\n", log.data());
+
+        glDeleteProgram(program);
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentaShader);
         return 0;
     }
 
