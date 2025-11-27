@@ -523,6 +523,18 @@ void uploadSurfaceToGPU(){
     glBindVertexArray(0);
 }
 
+std::string loadFile(const char* path){
+    std::ifstream file(path);
+    if(!file.is_open()){
+        printf("fail to open shader file");
+        return;
+    }
+    std::stringstream stringStream;
+
+    stringStream << file.rdbuf();
+    return stringStream.str();
+}
+
 GLuint compileShader(GLenum type, const char* src){
     GLuint shader = glCreateShader(type);
 
