@@ -10,7 +10,7 @@ GLuint loadTexture(const char* filePath);
 void drawOceanSurface();
 void generateSurfaceMesh();
 GLuint createProgram(const char* vertexShaderSrc, const char* fragShaderSrc);
-
+std::string loadFile(const char* path);
 extern GLUquadric* quad;
 
 extern GLint sliceCount;

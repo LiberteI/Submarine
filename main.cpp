@@ -112,8 +112,9 @@ void initialiseSceneResources(){
 
     uploadSurfaceToGPU();
 
+
     // compile glsl programs
-    oceanShaderProgram = createProgram("glsl/ocean.frag", "glsl/ocean.vert");
+    oceanShaderProgram = createProgram("glsl/ocean.vert", "glsl/ocean.frag");
     
     // make current with glUseProgram
     glUseProgram(oceanShaderProgram);

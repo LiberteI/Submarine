@@ -527,7 +527,7 @@ std::string loadFile(const char* path){
     std::ifstream file(path);
     if(!file.is_open()){
         printf("fail to open shader file");
-        return;
+        return "";
     }
     std::stringstream stringStream;
 
@@ -553,14 +553,16 @@ GLuint compileShader(GLenum type, const char* src){
     return shader;
 }
 
-GLuint createProgram(const char* vertexShaderSrc, const char* fragShaderSrc){
-    GLuint vertexShader = compileShader(GL_VERTEX_SHADER, vertexShaderSrc);
+GLuint createProgram(const char* vertexShaderPath, const char* fragShaderPath){
+    std::string vertexShaderSrc = loadFile(vertexShaderPath);
+    std::string fragShaderSrc = loadFile(fragShaderPath);
+    GLuint vertexShader = compileShader(GL_VERTEX_SHADER, vertexShaderSrc.c_str());
     if(vertexShader == 0){
         printf("fail to compile vertex shader\n");
         return 0;
     }
 
-    GLuint fragmentaShader = compileShader(GL_FRAGMENT_SHADER, fragShaderSrc);
+    GLuint fragmentaShader = compileShader(GL_FRAGMENT_SHADER, fragShaderSrc.c_str());
     if(fragmentaShader == 0){
         printf("fail to compile fragment shader\n");
         return 0;
