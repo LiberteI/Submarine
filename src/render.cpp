@@ -619,6 +619,8 @@ void drawOceanSurface(){
     // bind shader
     glUseProgram(oceanShaderProgram);
 
+    glPushMatrix();
+    glTranslatef(0, 720.0f, 0);
     // start record VAO
     glBindVertexArray(VAO);
     /*
@@ -634,5 +636,6 @@ void drawOceanSurface(){
 
     // restore state so fixed-function drawing continues to work
     glBindVertexArray(0);
+    glPopMatrix();
     glUseProgram(0);
 }
