@@ -9,9 +9,6 @@
 #include "../include/stb_image.h"
 #include "../include/renderScene.h"
 #include "../include/global.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 
 GLUquadric* quad;
@@ -523,18 +520,30 @@ void uploadSurfaceToGPU(){
     glBindVertexArray(0);
 }
 
+/*
+    Take a file path and return the file content
+*/
 std::string loadFile(const char* path){
+    // load file
     std::ifstream file(path);
+    // guard file
     if(!file.is_open()){
         printf("fail to open shader file");
         return "";
     }
+    // read tokens
     std::stringstream stringStream;
 
+    // return stringfied file
     stringStream << file.rdbuf();
     return stringStream.str();
 }
 
+
+/*
+    take the glsl content string, create a GL shader obj, compile it
+    report error message
+*/
 GLuint compileShader(GLenum type, const char* src){
     GLuint shader = glCreateShader(type);
 
@@ -563,6 +572,11 @@ GLuint compileShader(GLenum type, const char* src){
     return shader;
 }
 
+/*
+    load both vertex, fragment shaders, compile them, links them into a program
+
+    check link errors, cleans up the individual shader obj and return the program
+*/
 GLuint createProgram(const char* vertexShaderPath, const char* fragShaderPath){
     std::string vertexShaderSrc = loadFile(vertexShaderPath);
     std::string fragShaderSrc = loadFile(fragShaderPath);
