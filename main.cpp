@@ -119,7 +119,6 @@ void initialiseSceneResources(){
     // make current with glUseProgram
     if(oceanShaderProgram != 0){
         glUseProgram(oceanShaderProgram);
-        modelLocation = glGetUniformLocation(oceanShaderProgram, "model");
     }
     else{
         printf("Ocean shader failed to compile/link, falling back to fixed pipeline rendering.\n");
