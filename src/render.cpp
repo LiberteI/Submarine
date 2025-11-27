@@ -530,20 +530,46 @@ GLuint compileShader(GLenum type, const char* src){
 
     glCompileShader(shader);
 
+    GLint success;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+
+    if(!success){
+        printf("fail to compile shader\n");
+        return 0;
+    }
+
     return shader;
 }
 
 GLuint createProgram(const char* vertexShaderSrc, const char* fragShaderSrc){
-    GLuint vs = compileShader(GL_VERTEX_SHADER, vertexShaderSrc);
-    GLuint fs = compileShader(GL_FRAGMENT_SHADER, fragShaderSrc);
+    GLuint vertexShader = compileShader(GL_VERTEX_SHADER, vertexShaderSrc);
+    if(vertexShader == 0){
+        printf("fail to compile vertex shader\n");
+        return 0;
+    }
 
+    GLuint fragmentaShader = compileShader(GL_FRAGMENT_SHADER, fragShaderSrc);
+    if(fragmentaShader == 0){
+        printf("fail to compile fragment shader\n");
+        return 0;
+    }
+    
     GLuint program = glCreateProgram();
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
+    glAttachShader(program, vertexShader);
+    glAttachShader(program, fragmentaShader);
+
     glLinkProgram(program);
 
-    glDeleteShader(vs);
-    glDeleteShader(fs);
+    GLint success;
+    glGetProgramiv(program, GL_LINK_STATUS, &success);
+
+    if(!success){
+        printf("program link error\n");
+        return 0;
+    }
+
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentaShader);
 
     return program;
 
