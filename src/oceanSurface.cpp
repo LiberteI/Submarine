@@ -5,12 +5,6 @@
 #include <fstream>
 #include <sstream>
 #include <array>
-#include "../include/input.h"
-#include "../include/stb_image.h"
-#include "../include/renderScene.h"
-#include "../include/global.h"
-#include "../include/submarine.h"
-#include "../include/helper.h"
 #include "../include/oceanSurface.h"
 
 GLfloat oceanSurfaceUnitLength = 50;
