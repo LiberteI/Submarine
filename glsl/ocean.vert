@@ -18,7 +18,7 @@ void main() {
     // Asin(kx + φ) + offset, k = 2pi / mu
     // heightAtVertex = sin(valueBasedOnPosition + phase + timeValue) * waveAmplitude
     float height = sin(( curPos.x + curPos.z ) * frequency + phase ) * waveAmplitude;
-    curPos.y = height;
+    curPos.y += height;
 
     // have to include:
     gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * vec4(curPos, 1.0);

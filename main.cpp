@@ -17,6 +17,10 @@
 #include "include/global.h"
 
 
+void initialisefragmentShaders(){
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
 
 void registerInputFuncs(){
     // dump of input functions
@@ -78,6 +82,8 @@ void initialiseGlobalStates(){
     glEnable(GL_DEPTH_TEST);
     // use texture
     glEnable(GL_TEXTURE_2D);
+    // enable fragment shader
+    initialisefragmentShaders();
 }
 
 void initialiseFog(){
@@ -135,6 +141,7 @@ void initialiseGLEW(){
     glewExperimental = GL_TRUE;
     glewInit();
 }
+
 
 // i try to let main keep the same level of abstraction and i think main is self-explainary
 int main(int argc, char** argv){

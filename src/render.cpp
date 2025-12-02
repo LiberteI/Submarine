@@ -19,7 +19,7 @@ GLint stackCount = 60;
 GLint oceanBottomRadius = 1500;
 GLdouble oceanBottomPos = -500;
 
-GLfloat oceanSurfaceUnitLength = 60;
+GLfloat oceanSurfaceUnitLength = 50;
 // subdivide the surface into stripe - 1 pieces
 GLint oceanSurfaceVertexCount = 101;
 std::vector<std::array<GLfloat, 3>> oceanSurfaceVertices;

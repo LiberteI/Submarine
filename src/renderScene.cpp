@@ -66,9 +66,8 @@ void myDisplay(){
     glLightfv(GL_LIGHT0, GL_POSITION, sunlightDir);
 
     drawOriginDebugger();
-
+    
     drawOceanSurface();
-
     // --- textured objs
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, sandTexture);
