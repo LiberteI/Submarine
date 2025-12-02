@@ -654,6 +654,7 @@ void drawOceanSurface(){
     GLint uFrequency = glGetUniformLocation(oceanShaderProgram, "frequency");
     GLint uWaveAmplitude = glGetUniformLocation(oceanShaderProgram, "waveAmplitude");
     GLint uWaveSpeed = glGetUniformLocation(oceanShaderProgram, "waveSpeed");
+    // push attributes to GLSL
     glUniform1f(uFrequency, 0.12f);
     glUniform1f(uWaveAmplitude, 30.0f);
     glUniform1f(uWaveSpeed, 2.0f);
@@ -677,8 +678,13 @@ void drawOceanSurface(){
     glBindVertexArray(0);
     glPopMatrix();
 
-    float curTime = glutGet(GLUT_ELAPSED_TIME / 1000.0f);
+    // GLUT expects the enum; divide after retrieving milliseconds
+    // get time
+    float curTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+    // get Uniform time
     GLint uCurTime = glGetUniformLocation(oceanShaderProgram, "curTime");
+    // push uniform curTime
     glUniform1f(uCurTime, curTime);
+    // use Program
     glUseProgram(0);
 }
