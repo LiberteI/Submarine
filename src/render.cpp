@@ -650,6 +650,13 @@ void drawOceanSurface(){
     }
     // bind shader
     glUseProgram(oceanShaderProgram);
+    // get GLSL variables
+    GLint uFrequency = glGetUniformLocation(oceanShaderProgram, "frequency");
+    GLint uWaveAmplitude = glGetUniformLocation(oceanShaderProgram, "waveAmplitude");
+    GLint uWaveSpeed = glGetUniformLocation(oceanShaderProgram, "waveSpeed");
+    glUniform1f(uFrequency, 0.12f);
+    glUniform1f(uWaveAmplitude, 30.0f);
+    glUniform1f(uWaveSpeed, 2.0f);
 
     glPushMatrix();
     glTranslatef(0, 720.0f, 0);
@@ -669,5 +676,9 @@ void drawOceanSurface(){
     // restore state so fixed-function drawing continues to work
     glBindVertexArray(0);
     glPopMatrix();
+
+    float curTime = glutGet(GLUT_ELAPSED_TIME / 1000.0f);
+    GLint uCurTime = glGetUniformLocation(oceanShaderProgram, "curTime");
+    glUniform1f(uCurTime, curTime);
     glUseProgram(0);
 }
