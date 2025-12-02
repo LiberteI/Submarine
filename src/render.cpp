@@ -545,26 +545,35 @@ std::string loadFile(const char* path){
     report error message
 */
 GLuint compileShader(GLenum type, const char* src){
+    // create an empty shader object on GPU with glCreateShader(type). GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
     GLuint shader = glCreateShader(type);
-
+    
+    // attach shader source code to the shader using:
     glShaderSource(shader, 1, &src, nullptr);
 
+    // compile source code
     glCompileShader(shader);
 
+    // success = GL_TRUE / GL_FALSE
     GLint success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-
+    // ------- DEBUG MESSAGE ----------
     if(!success){
-        GLint len = 0;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
+        // log length of error message
+        GLint logMessageLength = 0;
+        // get length
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logMessageLength);
 
-        std::vector<char> log(len);
-        glGetShaderInfoLog(shader, len, nullptr, log.data());
-
-        printf("\n=== Shader Compile Error (%s) ===\n%s\n\n",
-            type == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT",
-            log.data());
-
+        // dynamic char buffer for error text
+        std::vector<char> log(logMessageLength);
+        glGetShaderInfoLog(shader, logMessageLength, nullptr, log.data());
+        if(type == GL_VERTEX_SHADER){
+            printf("\n=== Shader Compile Error (VERTEXT) ===\n%s\n\n", log.data());
+        }
+        else{
+            printf("\n=== Shader Compile Error (FRAGMENT) ===\n%s\n\n", log.data());
+        }
+        // delete shader if fail to compile
         glDeleteShader(shader);
         return 0;
     }
