@@ -16,12 +16,6 @@
 #include "include/stb_image.h"
 #include "include/global.h"
 
-
-void initialisefragmentShaders(){
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
-
 void registerInputFuncs(){
     // dump of input functions
     glutKeyboardFunc(myKeyboardDown);
@@ -80,10 +74,11 @@ void initialiseGlobalStates(){
     glShadeModel(GL_SMOOTH);
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
+    // enable alpha blending for transparency (e.g., ocean surface)
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     // use texture
     glEnable(GL_TEXTURE_2D);
-    // enable fragment shader
-    initialisefragmentShaders();
 }
 
 void initialiseFog(){

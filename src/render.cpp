@@ -655,12 +655,13 @@ void drawOceanSurface(){
     GLint uWaveAmplitude = glGetUniformLocation(oceanShaderProgram, "waveAmplitude");
     GLint uWaveSpeed = glGetUniformLocation(oceanShaderProgram, "waveSpeed");
     // push attributes to GLSL
-    glUniform1f(uFrequency, 0.12f);
-    glUniform1f(uWaveAmplitude, 30.0f);
-    glUniform1f(uWaveSpeed, 2.0f);
+    glUniform1f(uFrequency, 0.5f);
+    glUniform1f(uWaveAmplitude, 60.0f);
+    glUniform1f(uWaveSpeed, 4.0f);
 
     glPushMatrix();
     glTranslatef(0, 720.0f, 0);
+    
     // start record VAO
     glBindVertexArray(VAO);
     /*
@@ -676,6 +677,7 @@ void drawOceanSurface(){
 
     // restore state so fixed-function drawing continues to work
     glBindVertexArray(0);
+
     glPopMatrix();
 
     // GLUT expects the enum; divide after retrieving milliseconds
