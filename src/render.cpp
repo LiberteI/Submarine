@@ -505,6 +505,7 @@ void uploadSurfaceToGPU(){
 //  );
 
     // instruct GPU how to read raw vertex data
+    // feed attribute vec3 aPos; to ocean.vert
     glVertexAttribPointer(
         0,
         3,
