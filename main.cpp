@@ -56,7 +56,7 @@ void initialiseGeometryTools(){
 void initialiseWindow(){
     // initialise window
     glutInitWindowSize(windowWidth, windowHeight);
-    glutCreateWindow("SUBMARINE");
+    glutCreateWindow("SUBMARINE_SIMULATOR");
     recordNormalWindow();
 }
 
