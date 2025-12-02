@@ -587,26 +587,32 @@ GLuint compileShader(GLenum type, const char* src){
     check link errors, cleans up the individual shader obj and return the program
 */
 GLuint createProgram(const char* vertexShaderPath, const char* fragShaderPath){
+    // load vertex shader & fragment shader source code
     std::string vertexShaderSrc = loadFile(vertexShaderPath);
     std::string fragShaderSrc = loadFile(fragShaderPath);
+    // get compiled vertex shader
     GLuint vertexShader = compileShader(GL_VERTEX_SHADER, vertexShaderSrc.c_str());
+    // guard
     if(vertexShader == 0){
         printf("fail to compile vertex shader\n");
         return 0;
     }
-
+    // get compiled fragement shader
     GLuint fragmentaShader = compileShader(GL_FRAGMENT_SHADER, fragShaderSrc.c_str());
+    // guard
     if(fragmentaShader == 0){
         printf("fail to compile fragment shader\n");
         return 0;
     }
     
+    // create an actual GPU shader project obj
     GLuint program = glCreateProgram();
+    // attach compiled shaders to program
     glAttachShader(program, vertexShader);
     glAttachShader(program, fragmentaShader);
-
+    // link the program
     glLinkProgram(program);
-
+    // get error message
     GLint success;
     glGetProgramiv(program, GL_LINK_STATUS, &success);
 
@@ -619,6 +625,7 @@ GLuint createProgram(const char* vertexShaderPath, const char* fragShaderPath){
 
         printf("\n=== Program Link Error ===\n%s\n\n", log.data());
 
+        // clean up
         glDeleteProgram(program);
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentaShader);
@@ -628,6 +635,7 @@ GLuint createProgram(const char* vertexShaderPath, const char* fragShaderPath){
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentaShader);
 
+    // return valid program
     return program;
 
 }
