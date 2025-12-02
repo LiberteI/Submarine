@@ -8,6 +8,8 @@
 #include <cmath>
 #include <array>
 #include <algorithm>
+#include "../include/helper.h"
+#include "../include/submarine.h"
 
 GLfloat cameraOffset = 500;
 GLfloat horizontalAngle = 0;

@@ -15,6 +15,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "include/stb_image.h"
 #include "include/global.h"
+#include "include/helper.h"
+#include "include/submarine.h"
 
 void registerInputFuncs(){
     // dump of input functions
