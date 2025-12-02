@@ -8,7 +8,7 @@ void drawDisk();
 void drawCylinder();
 
 void drawOceanSurface();
-void generateSurfaceMesh();
+
 
 extern GLUquadric* quad;
 
