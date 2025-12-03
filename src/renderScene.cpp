@@ -78,20 +78,7 @@ void myDisplay(){
 
     drawCylinder();
 
-    drawCoral(coralMesh1, coralPoses[0]);
-    drawCoral(coralMesh2, coralPoses[1]);
-    drawCoral(coralMesh3, coralPoses[2]);
-    drawCoral(coralMesh4, coralPoses[3]);
-    drawCoral(coralMesh5, coralPoses[4]);
-    drawCoral(coralMesh6, coralPoses[5]);
-    drawCoral(coralMesh7, coralPoses[6]);
-    drawCoral(coralMesh8, coralPoses[7]);
-    drawCoral(coralMesh9, coralPoses[8]);
-    drawCoral(coralMesh10, coralPoses[9]);
-    drawCoral(coralMesh11, coralPoses[10]);
-    drawCoral(coralMesh12, coralPoses[11]);
-    drawCoral(coralMesh13, coralPoses[12]);
-    drawCoral(coralMesh14, coralPoses[13]);
+    drawCorals();
 
     // --- untextured obj
     glDisable(GL_TEXTURE_2D);

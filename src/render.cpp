@@ -12,7 +12,7 @@
 #include "../include/submarine.h"
 #include "../include/helper.h"
 #include "../include/oceanSurface.h"
-
+#include "../include/coral.h"
 GLUquadric* quad;
 
 GLint sliceCount = 60;
@@ -162,6 +162,8 @@ void drawOceanSurface(){
     glUseProgram(0);
 }
 
+
+
 void drawCoral(const MeshGPU& coral, const std::array<GLfloat, 2> pos){
     glPushMatrix();
     // scale coral up
@@ -173,4 +175,21 @@ void drawCoral(const MeshGPU& coral, const std::array<GLfloat, 2> pos){
     glDrawElements(GL_TRIANGLES, coral.indexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArrayAPPLE(0);
     glPopMatrix();
+}
+
+void drawCorals(){
+    drawCoral(coralMesh1, coralPoses[1]);
+    drawCoral(coralMesh2, coralPoses[2]);
+    drawCoral(coralMesh3, coralPoses[3]);
+    drawCoral(coralMesh4, coralPoses[4]);
+    drawCoral(coralMesh5, coralPoses[5]);
+    drawCoral(coralMesh6, coralPoses[6]);
+    drawCoral(coralMesh7, coralPoses[7]);
+    drawCoral(coralMesh8, coralPoses[8]);
+    drawCoral(coralMesh9, coralPoses[9]);
+    drawCoral(coralMesh10, coralPoses[10]);
+    drawCoral(coralMesh11, coralPoses[11]);
+    drawCoral(coralMesh12, coralPoses[12]);
+    drawCoral(coralMesh13, coralPoses[13]);
+    drawCoral(coralMesh14, coralPoses[14]);
 }
