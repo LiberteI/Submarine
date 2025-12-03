@@ -158,9 +158,9 @@ int main(int argc, char** argv){
 
     initialiseGeometryTools();
 
-    initialiseSceneResources();
-
     initialiseCallbackRegistrations();
+
+    initialiseSceneResources();
 
     glutMainLoop();
     

@@ -213,6 +213,9 @@ GLuint createProgram(const char* vertexShaderPath, const char* fragShaderPath){
     // attach compiled shaders to program
     glAttachShader(program, vertexShader);
     glAttachShader(program, fragmentaShader);
+    // bind attribute locations to match our VAO setup
+    glBindAttribLocation(program, 0, "aPos");
+    glBindAttribLocation(program, 1, "aNormal");
     // link the program
     glLinkProgram(program);
     // get error message
@@ -320,12 +323,7 @@ GLuint loadTexture(const char* filePath){
     return texture;
 }
 
-struct ObjData{
-    std::vector<GLint> vertexInstruction;
-    std::vector<GLint> normalInstruction;
-    std::vector<GLfloat> vertexList;
-    std::vector<GLfloat> normalList;
-};
+
 /*  
     CORAL.CPP
     This file performs 
@@ -398,19 +396,13 @@ ObjData getObjDataFromFile(const char* filePath){
     return data;
 }
 
-struct GPUdata{
-    // expect v3, n3, v3, n3
-    std::vector<GLfloat> VBO;
-    std::vector<GLuint> EBO; // 0 1 2 3 4 5....
-};
-
 GPUdata getGPUData(const char* filePath){
     /*
         read instruction and form a std::vector 3v 3n 3v 3n ....
     */
     GPUdata gpuData;
     ObjData objData = getObjDataFromFile(filePath);
-    
+    // printf("CPU data is empty: %d\n", objData.vertexList.empty());
     int faceCount = objData.vertexInstruction.size();
 
     for(int i = 0; i < faceCount; i++){
@@ -439,14 +431,6 @@ GPUdata getGPUData(const char* filePath){
     return gpuData;
 }
 
-// mesh container
-struct MeshGPU{
-    GLuint VAO = 0;
-    GLuint VBO = 0;
-    GLuint EBO = 0;
-    GLsizei indexCount = 0;
-};
-
 MeshGPU uploadToGPU(const GPUdata& dataToUpload){
     MeshGPU mesh;
 
@@ -456,11 +440,12 @@ MeshGPU uploadToGPU(const GPUdata& dataToUpload){
         return mesh;
     }
     // generate VAO and begin recording
-    glGenVertexArrays(1, &mesh.VAO);
-    glBindVertexArray(mesh.VAO);
+    glGenVertexArraysAPPLE(1, &mesh.VAO);
+    glBindVertexArrayAPPLE(mesh.VAO);
 
     // generate and upload VBO
     glGenBuffers(1, &mesh.VBO);
+    // printf("Generated VAO = %u\n", mesh.VAO);
     glBindBuffer(GL_ARRAY_BUFFER, mesh.VBO);
     glBufferData(
         GL_ARRAY_BUFFER,
@@ -506,10 +491,9 @@ MeshGPU uploadToGPU(const GPUdata& dataToUpload){
     glEnableVertexAttribArray(1);
 
     // end state recording
-    glBindVertexArray(0);
+    glBindVertexArrayAPPLE(0);
 
     // set index count
     mesh.indexCount = static_cast<GLsizei>(dataToUpload.EBO.size());
     return mesh;
 }
-

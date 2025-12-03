@@ -1,6 +1,6 @@
 #include <GLUT/glut.h>
 #include <array>
-
+#include "../include/helper.h"
 
 void drawSubmarine();
 void loadSubmarineFile();
@@ -8,6 +8,8 @@ void drawDisk();
 void drawCylinder();
 
 void drawOceanSurface();
+
+void drawCoral(const MeshGPU& coral);
 
 
 extern GLUquadric* quad;

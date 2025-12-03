@@ -5,6 +5,7 @@
 #include "../include/input.h"
 #include "../include/lighting.h"
 #include "../include/global.h"
+#include "../include/coral.h"
 #include <cmath>
 #include <array>
 #include <algorithm>
@@ -77,6 +78,8 @@ void myDisplay(){
 
     drawCylinder();
     
+    drawCoral(coralMesh);
+
     // --- untextured obj
     glDisable(GL_TEXTURE_2D);
     drawSubmarine();

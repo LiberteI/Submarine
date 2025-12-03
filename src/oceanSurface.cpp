@@ -98,14 +98,16 @@ void generateSurfaceMesh(){
 
 void createVertexArrayObj(){
     // request one vertex buffer obj
-    glGenVertexArrays(1, &VAO);
+    glGenVertexArraysAPPLE(1, &VAO);
+    // printf("generated ocean VAO: %d\n", VAO);
     // all buffer bindings and attribute definitions are stored inside VAO
-    glBindVertexArray(VAO);
+    glBindVertexArrayAPPLE(VAO);
 }
 
 void createVertexBufferObj(){
     // create a GPU buffer obj for vertex data
     glGenBuffers(1, &VBO);
+    
     // bind
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
@@ -179,5 +181,5 @@ void uploadSurfaceToGPU(){
     glEnableVertexAttribArray(0);
 
     // stop recording VAO
-    glBindVertexArray(0);
+    glBindVertexArrayAPPLE(0);
 }

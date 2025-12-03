@@ -142,20 +142,12 @@ void drawOceanSurface(){
     glTranslatef(0, 720.0f, 0);
     
     // start record VAO
-    glBindVertexArray(VAO);
-    /*
-        void glDrawElements(
-            GLenum mode,        // drawing mode
-            GLsizei count,      // how many indices to read from EBO
-            GLenum type,        // each index's type
-            const void *indices // offset
-        )
-    */
+    glBindVertexArrayAPPLE(VAO);
     
     glDrawElements(GL_TRIANGLES, oceanSurfaceIndices.size(), GL_UNSIGNED_INT, 0);
 
     // restore state so fixed-function drawing continues to work
-    glBindVertexArray(0);
+    glBindVertexArrayAPPLE(0);
 
     glPopMatrix();
 
@@ -166,6 +158,13 @@ void drawOceanSurface(){
     GLint uCurTime = glGetUniformLocation(oceanShaderProgram, "curTime");
     // push uniform curTime
     glUniform1f(uCurTime, curTime);
-    // use Program
+    // unuse Program
     glUseProgram(0);
+}
+
+void drawCoral(const MeshGPU& coral){
+    
+    glBindVertexArrayAPPLE(coral.VAO);
+    glDrawElements(GL_TRIANGLES, coral.indexCount, GL_UNSIGNED_INT, 0);
+    glBindVertexArrayAPPLE(0);
 }
