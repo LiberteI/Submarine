@@ -9,7 +9,7 @@ void drawCylinder();
 
 void drawOceanSurface();
 
-void drawCoral(const MeshGPU& coral);
+void drawCoral(const MeshGPU& coral, const std::array<GLfloat, 2> pos);
 
 
 extern GLUquadric* quad;

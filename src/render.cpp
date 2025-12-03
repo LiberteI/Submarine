@@ -162,12 +162,12 @@ void drawOceanSurface(){
     glUseProgram(0);
 }
 
-void drawCoral(const MeshGPU& coral){
+void drawCoral(const MeshGPU& coral, const std::array<GLfloat, 2> pos){
     glPushMatrix();
     // scale coral up
 
-    glTranslatef(0, -500, 0);
-    glScalef(100, 100, 100);
+    glTranslatef(pos[0], -500, pos[1]);
+    glScalef(200, 200, 200);
     
     glBindVertexArrayAPPLE(coral.VAO);
     glDrawElements(GL_TRIANGLES, coral.indexCount, GL_UNSIGNED_INT, 0);
