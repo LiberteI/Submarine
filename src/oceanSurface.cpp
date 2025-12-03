@@ -20,6 +20,27 @@ GLuint VAO;
 GLuint VBO;
 GLuint EBO;
 /*
+    1. use oceanSurfaceVertexCount = stripe, odd. 
+    2. define origin1 (x, z) = (0, 0) -> world space(x - n / 2 * unitLength, z - n / 2 * unitLength)
+    3. loop from z = 0, x = 0, 1, 2, ... ,n - 1, take adjacent vertices to draw 2 triangles. 
+    4. then z = 1, 2, 3, ... , n - 1, repeat step 3.
+    5. ** convert 2d index(x, z) to 1d index: index = z * stripe + x.
+    6. calculate world space vertices and store them to surfaceVertices
+*/ 
+void generateSurfaceVertices(){
+    GLint indexHalf = oceanSurfaceVertexCount / 2;
+    for(int z = 0; z < oceanSurfaceVertexCount; z ++){
+        
+        for(int x = 0; x < oceanSurfaceVertexCount; x ++){
+            GLfloat oceanVertexZ = (z - indexHalf) * oceanSurfaceUnitLength;
+            GLfloat oceanVertexX = (x - indexHalf) * oceanSurfaceUnitLength;
+            GLfloat oceanVertexY = 0;
+        
+            oceanSurfaceVertices.push_back({oceanVertexX, oceanVertexY, oceanVertexZ});
+        }
+    }
+}
+/*
     The unit squre: 
     A, B
     C, D
@@ -116,27 +137,7 @@ void createElementBufferObj(){
         GL_STATIC_DRAW
     );
 }
-/*
-    1. use oceanSurfaceVertexCount = stripe, odd. 
-    2. define origin1 (x, z) = (0, 0) -> world space(x - n / 2 * unitLength, z - n / 2 * unitLength)
-    3. loop from z = 0, x = 0, 1, 2, ... ,n - 1, take adjacent vertices to draw 2 triangles. 
-    4. then z = 1, 2, 3, ... , n - 1, repeat step 3.
-    5. ** convert 2d index(x, z) to 1d index: index = z * stripe + x.
-    6. calculate world space vertices and store them to surfaceVertices
-*/ 
-void generateSurfaceVertices(){
-    GLint indexHalf = oceanSurfaceVertexCount / 2;
-    for(int z = 0; z < oceanSurfaceVertexCount; z ++){
-        
-        for(int x = 0; x < oceanSurfaceVertexCount; x ++){
-            GLfloat oceanVertexZ = (z - indexHalf) * oceanSurfaceUnitLength;
-            GLfloat oceanVertexX = (x - indexHalf) * oceanSurfaceUnitLength;
-            GLfloat oceanVertexY = 0;
-        
-            oceanSurfaceVertices.push_back({oceanVertexX, oceanVertexY, oceanVertexZ});
-        }
-    }
-}
+
 
 
 // upload vertices + indices to GPU

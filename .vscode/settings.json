@@ -39,6 +39,21 @@
         "variant": "cpp",
         "vector": "cpp",
         "algorithm": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "fstream": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp",
+        "__hash_table": "cpp",
+        "__node_handle": "cpp",
+        "charconv": "cpp",
+        "complex": "cpp",
+        "deque": "cpp",
+        "memory": "cpp",
+        "forward_list": "cpp",
+        "iomanip": "cpp",
+        "print": "cpp",
+        "queue": "cpp",
+        "span": "cpp",
+        "stack": "cpp"
     }
 }
