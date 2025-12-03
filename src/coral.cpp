@@ -6,7 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <array>
-struct objData{
+struct ObjData{
     std::vector<GLint> vertexInstruction;
     std::vector<GLint> normalInstruction;
     std::vector<GLfloat> vertexList;
@@ -21,8 +21,8 @@ struct objData{
 */
 
 // return a struct 
-objData getObjDataFromFile(const char* filePath){
-    objData data;
+ObjData getObjDataFromFile(const char* filePath){
+    ObjData data;
     // load file
     std::ifstream file(filePath);
     // guard
@@ -87,13 +87,41 @@ objData getObjDataFromFile(const char* filePath){
 struct GPUdata{
     // expect v3, n3, v3, n3
     std::vector<GLfloat> VBO;
-    std::vector<GLint> EBO;
+    std::vector<GLuint> EBO; // 0 1 2 3 4 5....
 };
 
-GPUdata getGPUData(){
+GPUdata getGPUData(const char* filePath){
     /*
         read instruction and form a std::vector 3v 3n 3v 3n ....
     */
-   
+    GPUdata gpuData;
+    ObjData objData = getObjDataFromFile(filePath);
+    
+    int faceCount = objData.vertexInstruction.size();
+
+    for(int i = 0; i < faceCount; i++){
+        // Obj indices are 1 based
+        int vIndex = objData.vertexInstruction[i] - 1;
+        int nIndex = objData.normalInstruction[i] - 1;
+
+        // stride in raw arrays = 3 floats
+        int vBase = vIndex * 3;
+        int nBase = nIndex * 3;
+
+        // --- Push Position ---
+        gpuData.VBO.push_back(objData.vertexList[vBase + 0]);
+        gpuData.VBO.push_back(objData.vertexList[vBase + 1]);
+        gpuData.VBO.push_back(objData.vertexList[vBase + 2]);
+
+        // --- Push Normal ---
+        gpuData.VBO.push_back(objData.normalList[nBase + 0]);
+        gpuData.VBO.push_back(objData.normalList[nBase + 1]);
+        gpuData.VBO.push_back(objData.normalList[nBase + 2]);
+
+        // --- EBO ---
+        // size = 0, 1, 2, 3, 4.......
+        gpuData.EBO.push_back(static_cast<GLuint>(gpuData.EBO.size()));
+    }
+    return gpuData;
 }
 
