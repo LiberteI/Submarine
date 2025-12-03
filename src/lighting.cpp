@@ -1,5 +1,6 @@
 #define GL_SILENCE_DEPRECATION
 #include <GLUT/glut.h>
+#include "../include/global.h"
 
 // x, y, z(pos | direction(vector)) ,w (1 -> point light | 0 -> directional light)
 GLfloat sunlightDir[] = {1.0f, 1.0f, 0.2f, 0.0f};

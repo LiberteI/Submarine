@@ -7,6 +7,8 @@ uniform float waveAmplitude;
 uniform float curTime;
 uniform float frequency;
 
+varying vec3 vWorldPos;
+varying vec3 vNormal;
 void main() {
     // compute phase φ
     float phase = curTime * waveSpeed;
@@ -14,12 +16,19 @@ void main() {
     // copy current vertex's pos
     vec3 curPos = aPos;
 
-    // compute height
-    // Asin(kx + φ) + offset, k = 2pi / mu
-    // heightAtVertex = sin(valueBasedOnPosition + phase + timeValue) * waveAmplitude
-    float height = sin(( curPos.x + curPos.z ) * frequency + phase ) * waveAmplitude;
+    float waveArg = (curPos.x + curPos.z) * frequency + phase;
+    float height = sin(waveArg) * waveAmplitude;
     curPos.y += height;
 
-    // have to include:
-    gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * vec4(curPos, 1.0);
+    float dhdx = waveAmplitude * frequency * cos(waveArg);
+    float dhdz = waveAmplitude * frequency * cos(waveArg);
+    vNormal = normalize(vec3(-dhdx, 1.0, -dhdz));
+
+    // world position tracking
+    // --- using fixed pipeline matrix ---
+    vec4 worldPos = gl_ModelViewMatrix * vec4(curPos, 1.0);
+    vWorldPos = worldPos.xyz;
+
+    gl_Position = gl_ProjectionMatrix * worldPos;
+    
 }

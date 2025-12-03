@@ -137,6 +137,21 @@ void updateOceanShader(){
     GLint uCurTime = glGetUniformLocation(oceanShaderProgram, "curTime");
     // push uniform curTime
     glUniform1f(uCurTime, curTime);
+
+    // ------- lighting -------
+
+    GLint uLightPos = glGetUniformLocation(oceanShaderProgram, "lightPos");
+    GLint uLightColor = glGetUniformLocation(oceanShaderProgram, "lightColor");
+    GLint uMatDiffuse = glGetUniformLocation(oceanShaderProgram, "matDiffuse");
+    GLint uMatSpecular = glGetUniformLocation(oceanShaderProgram, "matSpecular");
+    GLint uMatShininess = glGetUniformLocation(oceanShaderProgram, "matShininess");
+    glUniform3f(uLightPos,  600.0f, 300.0f, 200.0f);  // e.g. sun above water
+    glUniform3f(uLightColor, 1.0f, 1.0f, 0.95f);
+
+    // material tuning
+    glUniform3f(uMatDiffuse,  0.0f, 0.3f, 0.8f);  // underwater teal
+    glUniform3f(uMatSpecular, 0.6f, 0.6f, 0.6f);
+    glUniform1f(uMatShininess, 64.0f);
 }
 // called every frame
 void drawOceanSurface(){
@@ -150,7 +165,7 @@ void drawOceanSurface(){
 
     glPushMatrix();
     glTranslatef(0, 720.0f, 0);
-    
+
     // start record VAO
     glBindVertexArrayAPPLE(VAO);
     glDrawElements(GL_TRIANGLES, oceanSurfaceIndices.size(), GL_UNSIGNED_INT, 0);

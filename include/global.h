@@ -6,5 +6,5 @@ extern GLint windowXPos;
 extern GLint windowYPos;
 extern GLuint sandTexture;
 extern GLuint oceanShaderProgram;
-
+extern GLuint coralShaderProgram;
 void recordNormalWindow();
