@@ -9,6 +9,8 @@
 struct objData{
     std::vector<GLint> vertexInstruction;
     std::vector<GLint> normalInstruction;
+    std::vector<GLfloat> vertexList;
+    std::vector<GLfloat> normalList;
 };
 /*  
     CORAL.CPP
@@ -18,81 +20,8 @@ struct objData{
     3. specifying corals' material and upload it to GLSL
 */
 
-std::vector<GLfloat> getVertexListFromFile(const char* filePath){
-    std::vector<GLfloat> vertexList;
-    // load file
-    std::ifstream file(filePath);
-    // guard
-    if(!file.is_open()){
-        printf("fail to open %s \n", filePath);
-        return {};
-    }
-
-    std::string currentLine;
-
-    // read the next line and store it in "currentLine"
-    while(std::getline(file, currentLine)){
-        // get current string stream version of currentLine, so that we can use >> effectively
-        std::stringstream curTokenizedLine(currentLine);
-
-        std::string identifier;
-        // get the first token
-        curTokenizedLine >> identifier;
-        if(identifier != "v"){
-            continue;
-        }
-
-        GLfloat token1, token2, token3;
-        curTokenizedLine >> token1;
-        curTokenizedLine >> token2;
-        curTokenizedLine >> token3;
-
-        vertexList.push_back(token1);
-        vertexList.push_back(token2);
-        vertexList.push_back(token3);
-    }
-    return vertexList;
-}
-
-std::vector<GLfloat> getNormalListFromFile(const char* filePath){
-    std::vector<GLfloat> normalList;
-    // load file
-    std::ifstream file(filePath);
-    // guard
-    if(!file.is_open()){
-        printf("fail to open %s \n", filePath);
-        return {};
-    }
-
-    std::string currentLine;
-
-    // read the next line and store it in "currentLine"
-    while(std::getline(file, currentLine)){
-        // get current string stream version of currentLine, so that we can use >> effectively
-        std::stringstream curTokenizedLine(currentLine);
-
-        std::string identifier;
-        // get the first token
-        curTokenizedLine >> identifier;
-        if(identifier != "vn"){
-            continue;
-        }
-
-        GLfloat token1, token2, token3;
-        curTokenizedLine >> token1;
-        curTokenizedLine >> token2;
-        curTokenizedLine >> token3;
-
-        normalList.push_back(token1);
-        normalList.push_back(token2);
-        normalList.push_back(token3);
-        
-    }
-    return normalList;
-}
-
 // return a struct 
-objData getFaceFromFile(const char* filePath){
+objData getObjDataFromFile(const char* filePath){
     objData data;
     // load file
     std::ifstream file(filePath);
@@ -113,6 +42,26 @@ objData getFaceFromFile(const char* filePath){
         // get the first token
         curTokenizedLine >> identifier;
         if(identifier != "f"){
+            if(identifier == "v"){
+                GLfloat token1, token2, token3;
+                curTokenizedLine >> token1;
+                curTokenizedLine >> token2;
+                curTokenizedLine >> token3;
+
+                data.vertexList.push_back(token1);
+                data.vertexList.push_back(token2);
+                data.vertexList.push_back(token3);
+            }
+            if(identifier == "vn"){
+                GLfloat token1, token2, token3;
+                curTokenizedLine >> token1;
+                curTokenizedLine >> token2;
+                curTokenizedLine >> token3;
+
+                data.normalList.push_back(token1);
+                data.normalList.push_back(token2);
+                data.normalList.push_back(token3);
+            }
             continue;
         }
 
@@ -133,5 +82,18 @@ objData getFaceFromFile(const char* filePath){
         data.normalInstruction.push_back(parsedToken3[1]);
     }
     return data;
+}
+
+struct GPUdata{
+    // expect v3, n3, v3, n3
+    std::vector<GLfloat> VBO;
+    std::vector<GLint> EBO;
+};
+
+GPUdata getGPUData(){
+    /*
+        read instruction and form a std::vector 3v 3n 3v 3n ....
+    */
+   
 }
 
