@@ -81,7 +81,7 @@ void applySandEmission(){
 
 void drawDisk(){
     applySandEmission();
-    // *** The last transform you call affects the object first. ***
+    // *** The last transform call affects the object first. ***
     glPushMatrix();
     glTranslatef(0, oceanBottomPos, 0);
     glRotatef(-90, 1, 0, 0);
@@ -164,10 +164,13 @@ void drawOceanSurface(){
 
 void drawCoral(const MeshGPU& coral){
     glPushMatrix();
+    // scale coral up
+
+    glTranslatef(0, -500, 0);
     glScalef(100, 100, 100);
+    
     glBindVertexArrayAPPLE(coral.VAO);
     glDrawElements(GL_TRIANGLES, coral.indexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArrayAPPLE(0);
     glPopMatrix();
-    
 }

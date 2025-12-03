@@ -129,6 +129,8 @@ void initialiseSceneResources(){
     }
 
     loadCorals();
+
+    initialiseCoralPos();
 }
 
 void initialiseCallbackRegistrations(){

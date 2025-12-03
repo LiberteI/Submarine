@@ -5,6 +5,7 @@
 #include <array>
 #include <vector>
 #include <GLUT/glut.h>
+GLfloat getRandomCoralPos();
 GLuint createProgram(const char* vertexShaderSrc, const char* fragShaderSrc);
 std::string loadFile(const char* path);
 GLuint loadTexture(const char* filePath);

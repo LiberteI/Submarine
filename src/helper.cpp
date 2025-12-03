@@ -5,10 +5,13 @@
 #include <fstream>
 #include <sstream>
 #include <array>
+#include <random>
 #include "../include/stb_image.h"
 #include "../include/render.h"
 #include "../include/submarine.h"
-
+// get hardware entropy
+std::random_device rd;
+std::mt19937 gen(rd());
 // load file -> read line by line -> ignore lines that do not start with g/v/vn/f -> store vertices -> store normals -> follow instr
 // note : just figured out the indices are cumulative.
 // used for parsing tokens looking like "123//456". return an array{123, 456}
@@ -496,4 +499,10 @@ MeshGPU uploadToGPU(const GPUdata& dataToUpload){
     // set index count
     mesh.indexCount = static_cast<GLsizei>(dataToUpload.EBO.size());
     return mesh;
+}
+
+GLfloat getRandomCoralPos(){
+    std::uniform_real_distribution<GLfloat> dist(-oceanBottomRadius, oceanBottomRadius);
+
+    return dist(gen);
 }
