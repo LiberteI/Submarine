@@ -164,7 +164,7 @@ void drawOceanSurface(){
 
 void drawCoral(const MeshGPU& coral){
     glPushMatrix();
-    glScalef(10, 10, 10);
+    glScalef(100, 100, 100);
     glBindVertexArrayAPPLE(coral.VAO);
     glDrawElements(GL_TRIANGLES, coral.indexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArrayAPPLE(0);

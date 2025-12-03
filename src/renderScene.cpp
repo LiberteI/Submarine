@@ -78,7 +78,7 @@ void myDisplay(){
 
     drawCylinder();
     
-    drawCoral(coralMesh);
+    drawCoral(coralMesh1);
 
     // --- untextured obj
     glDisable(GL_TEXTURE_2D);
