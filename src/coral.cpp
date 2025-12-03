@@ -16,6 +16,9 @@ MeshGPU coralMesh13;
 MeshGPU coralMesh14;
 std::vector<std::array<GLfloat, 2>> coralPoses;
 
+/*
+    load CPU coral mesh and upload to GPU
+*/
 void loadCorals(){
     GPUdata coral1 = getGPUData("assets/coral/coral_1.obj");
     GPUdata coral2 = getGPUData("assets/coral/coral_2.obj");
@@ -49,13 +52,15 @@ void loadCorals(){
     // printf("coralMesh.VAO %d\n", coralMesh.VAO);
 }
 
-void initialiseCoralPos(){
- 
+void initialiseCoralPos(){  
+    // generate random pos for each coral
+    coralPoses.resize(14);
     for(int i = 0; i < 14; i++){
         coralPoses.push_back(
-            {coralPoses[i][0] = getRandomCoralPos(),
-            coralPoses[i][1] = getRandomCoralPos()}
+            {
+                coralPoses[i][0] = getRandomCoralPos(),
+                coralPoses[i][1] = getRandomCoralPos()
+            }
         );
-        
     }
 }

@@ -99,24 +99,15 @@ void initialiseFog(){
     glFogf(GL_FOG_DENSITY, 0.0005);
 }
 
-void initialiseSceneResources(){
-    // enable a specific light source as the sun(GL_LIGHT0)
-    glEnable(GL_LIGHT0);
-
-    launchLightings();
-    
-    loadSubmarineFile();
-
+void loadTextures(){
     // flip coordinate
     stbi_set_flip_vertically_on_load(true);
 
     sandTexture = loadTexture("assets/sand.jpg");
 
-    initialiseFog();
+}
 
-    uploadSurfaceToGPU();
-
-
+void loadOceanSurface(){
     // compile glsl programs
     oceanShaderProgram = createProgram("glsl/ocean.vert", "glsl/ocean.frag");
     
@@ -127,6 +118,23 @@ void initialiseSceneResources(){
     else{
         printf("Ocean shader failed to compile/link, falling back to fixed pipeline rendering.\n");
     }
+}
+
+void initialiseSceneResources(){
+    // enable a specific light source as the sun(GL_LIGHT0)
+    glEnable(GL_LIGHT0);
+
+    launchLightings();
+    
+    loadSubmarineFile();
+
+    initialiseFog();
+
+    uploadSurfaceToGPU();
+
+    loadTextures();
+
+    loadOceanSurface();
 
     loadCorals();
 
