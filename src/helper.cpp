@@ -502,7 +502,7 @@ MeshGPU uploadToGPU(const GPUdata& dataToUpload){
 }
 
 GLfloat getRandomCoralPos(){
-    std::uniform_real_distribution<GLfloat> dist(-oceanBottomRadius + 100, oceanBottomRadius - 100);
+    std::uniform_real_distribution<GLfloat> dist(-oceanBottomRadius + 300, oceanBottomRadius - 300);
 
     return dist(gen);
 }
