@@ -198,8 +198,9 @@ void myMousePassiveMotion(int x, int y){
     curMouseYPos = y;
     // printf("x, y: %f, %f\n" ,curMouseXPos ,curMouseYPos);
 
-    deltaMouseX = curMouseXPos - lastMouseXPos;
-    deltaMouseY = curMouseYPos - lastMouseYPos;
+    // accumulate all motion since last frame so quick moves are not lost
+    deltaMouseX += curMouseXPos - lastMouseXPos;
+    deltaMouseY += curMouseYPos - lastMouseYPos;
 
     lastMouseXPos = curMouseXPos;
     lastMouseYPos = curMouseYPos;
