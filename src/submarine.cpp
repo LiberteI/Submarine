@@ -20,19 +20,12 @@ std::vector<std::array<GLfloat, 3>> submarineNormalList;
 std::vector<std::array<std::array<GLint, 2>, 3>> submarineFaceListWithNormal;
 
 void initialiseSubmarineMaterial(){
-    // ambient gray (low brightness)
-    GLfloat ambient[] = {0.2f, 0.2f, 0.2f, 1.0f};
-
-    // diffuse gray (main visible color)
-    GLfloat diffuse[] = {0.6f, 0.6f, 0.6f, 1.0f};
-
-    // specular highlight (steel hull has some shine)
-    GLfloat specular[] = {0.4f, 0.4f, 0.4f, 1.0f};
-
-    GLfloat emission[] = {0.1f, 0.1f, 0.1f, 1.0f};
-
-    // shininess controls highlight size (higher = sharper)
-    GLfloat shininess = 32.0f;
+    // warm yellow base with subtle highlight
+    GLfloat ambient[] = {0.25f, 0.20f, 0.05f, 1.0f};
+    GLfloat diffuse[] = {0.9f, 0.75f, 0.15f, 1.0f};
+    GLfloat specular[] = {0.3f, 0.25f, 0.15f, 1.0f};
+    GLfloat emission[] = {0.05f, 0.04f, 0.01f, 1.0f};
+    GLfloat shininess = 24.0f;
 
     glMaterialfv(GL_FRONT, GL_AMBIENT,  ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE,  diffuse);
