@@ -434,14 +434,7 @@ GPUdata getGPUData(const char* filePath){
     return gpuData;
 }
 
-MeshGPU uploadToGPU(const GPUdata& dataToUpload){
-    MeshGPU mesh;
-
-    // validate CPU data
-    if(dataToUpload.VBO.empty() || dataToUpload.EBO.empty()){
-        printf("GPU data is not completed\n");
-        return mesh;
-    }
+void createVAOVBOEBO(const GPUdata& dataToUpload, MeshGPU& mesh){
     // generate VAO and begin recording
     glGenVertexArraysAPPLE(1, &mesh.VAO);
     glBindVertexArrayAPPLE(mesh.VAO);
@@ -466,7 +459,9 @@ MeshGPU uploadToGPU(const GPUdata& dataToUpload){
         dataToUpload.EBO.data(),
         GL_STATIC_DRAW
     );
+}
 
+void describeVBOEBOToGPU(const GPUdata& dataToUpload, MeshGPU& mesh){
     // --- Describe how to read interleaved data ---
     // interleaved layout 3 pos, 3 normals
     GLsizei stride = 6 * sizeof(GLfloat);
@@ -498,6 +493,21 @@ MeshGPU uploadToGPU(const GPUdata& dataToUpload){
 
     // set index count
     mesh.indexCount = static_cast<GLsizei>(dataToUpload.EBO.size());
+}
+
+MeshGPU uploadToGPU(const GPUdata& dataToUpload){
+    MeshGPU mesh;
+
+    // validate CPU data
+    if(dataToUpload.VBO.empty() || dataToUpload.EBO.empty()){
+        printf("GPU data is not completed\n");
+        return mesh;
+    }
+    
+    createVAOVBOEBO(dataToUpload, mesh);
+
+    describeVBOEBOToGPU(dataToUpload, mesh);
+
     return mesh;
 }
 
