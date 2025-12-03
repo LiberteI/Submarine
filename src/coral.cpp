@@ -19,7 +19,7 @@ void loadCorals(){
     // GPUdata coral14 = getGPUData("assets/coral/coral_14.obj");
 
     coralMesh = uploadToGPU(coral1);
-    printf("coralMesh.VAO %d\n", coralMesh.VAO);
+    // printf("coralMesh.VAO %d\n", coralMesh.VAO);
     // coralMeshes.push_back(uploadToGPU(coral2));
     // coralMeshes.push_back(uploadToGPU(coral3));
     // coralMeshes.push_back(uploadToGPU(coral4));

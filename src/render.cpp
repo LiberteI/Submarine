@@ -163,8 +163,11 @@ void drawOceanSurface(){
 }
 
 void drawCoral(const MeshGPU& coral){
-    
+    glPushMatrix();
+    glScalef(10, 10, 10);
     glBindVertexArrayAPPLE(coral.VAO);
     glDrawElements(GL_TRIANGLES, coral.indexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArrayAPPLE(0);
+    glPopMatrix();
+    
 }
