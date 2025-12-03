@@ -17,6 +17,7 @@
 #include "include/global.h"
 #include "include/helper.h"
 #include "include/submarine.h"
+#include "include/coral.h"
 
 void registerInputFuncs(){
     // dump of input functions
@@ -126,6 +127,8 @@ void initialiseSceneResources(){
     else{
         printf("Ocean shader failed to compile/link, falling back to fixed pipeline rendering.\n");
     }
+
+    loadCorals();
 }
 
 void initialiseCallbackRegistrations(){
