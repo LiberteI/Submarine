@@ -439,3 +439,7 @@ GPUdata getGPUData(const char* filePath){
     return gpuData;
 }
 
+void uploadToGPU(){
+    
+}
+
