@@ -439,7 +439,77 @@ GPUdata getGPUData(const char* filePath){
     return gpuData;
 }
 
-void uploadToGPU(){
-    
+// mesh container
+struct MeshGPU{
+    GLuint VAO = 0;
+    GLuint VBO = 0;
+    GLuint EBO = 0;
+    GLsizei indexCount = 0;
+};
+
+MeshGPU uploadToGPU(const GPUdata& dataToUpload){
+    MeshGPU mesh;
+
+    // validate CPU data
+    if(dataToUpload.VBO.empty() || dataToUpload.EBO.empty()){
+        printf("GPU data is not completed\n");
+        return mesh;
+    }
+    // generate VAO and begin recording
+    glGenVertexArrays(1, &mesh.VAO);
+    glBindVertexArray(mesh.VAO);
+
+    // generate and upload VBO
+    glGenBuffers(1, &mesh.VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, mesh.VBO);
+    glBufferData(
+        GL_ARRAY_BUFFER,
+        dataToUpload.VBO.size() * sizeof(GLfloat),
+        dataToUpload.VBO.data(),
+        GL_STATIC_DRAW
+    );
+
+    // generate and upload EBO
+    glGenBuffers(1, &mesh.EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.EBO);
+    glBufferData(
+        GL_ELEMENT_ARRAY_BUFFER,
+        dataToUpload.EBO.size() * sizeof(GLuint),
+        dataToUpload.EBO.data(),
+        GL_STATIC_DRAW
+    );
+
+    // --- Describe how to read interleaved data ---
+    // interleaved layout 3 pos, 3 normals
+    GLsizei stride = 6 * sizeof(GLfloat);
+
+    // attribute 0 : position
+    glVertexAttribPointer(
+        0,  // bind attribute location 0
+        3,  // take 3 floats
+        GL_FLOAT,
+        GL_FALSE,
+        stride, // step 6 floats to next vertex
+        (void*)0 // no offset
+    );
+    glEnableVertexAttribArray(0);
+
+    // attribute 1 : normal
+    glVertexAttribPointer(
+        1,  // location 1
+        3,  // 3 floats
+        GL_FLOAT,
+        GL_FALSE,
+        stride,
+        (void*)(3 * sizeof(GLfloat)) // offset: 3 floats from the start
+    );
+    glEnableVertexAttribArray(1);
+
+    // end state recording
+    glBindVertexArray(0);
+
+    // set index count
+    mesh.indexCount = static_cast<GLsizei>(dataToUpload.EBO.size());
+    return mesh;
 }
 

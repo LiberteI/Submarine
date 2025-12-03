@@ -1,12 +1,6 @@
 #include "../include/helper.h"
 
-// mesh container
-struct CoralMesh{
-    GLuint VAO = 0;
-    GLuint VBO = 0;
-    GLuint EB0 = 0;
-    GLsizei indexCount = 0;
-};
+
 
 void loadCorals(){
     GPUdata coral1 = getGPUData("assets/coral/coral_1.obj");
@@ -23,4 +17,5 @@ void loadCorals(){
     GPUdata coral12 = getGPUData("assets/coral/coral_12.obj");
     GPUdata coral13 = getGPUData("assets/coral/coral_13.obj");
     GPUdata coral14 = getGPUData("assets/coral/coral_14.obj");
+
 }

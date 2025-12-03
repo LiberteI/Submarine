@@ -21,6 +21,13 @@ struct GPUdata{
     std::vector<GLfloat> VBO;
     std::vector<GLuint> EBO; // 0 1 2 3 4 5....
 };
+// mesh container
+struct MeshGPU{
+    GLuint VAO = 0;
+    GLuint VBO = 0;
+    GLuint EB0 = 0;
+    GLsizei indexCount = 0;
+};
 GPUdata getGPUData(const char* filePath);
 void uploadSurfaceToGPU();
 std::array<GLint, 2> parseToken(std::string token);
