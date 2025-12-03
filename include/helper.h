@@ -25,10 +25,11 @@ struct GPUdata{
 struct MeshGPU{
     GLuint VAO = 0;
     GLuint VBO = 0;
-    GLuint EB0 = 0;
+    GLuint EBO = 0;
     GLsizei indexCount = 0;
 };
 GPUdata getGPUData(const char* filePath);
 void uploadSurfaceToGPU();
 std::array<GLint, 2> parseToken(std::string token);
 void drawOriginDebugger();
+MeshGPU uploadToGPU(const GPUdata& dataToUpload);

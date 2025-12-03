@@ -18,4 +18,18 @@ void loadCorals(){
     GPUdata coral13 = getGPUData("assets/coral/coral_13.obj");
     GPUdata coral14 = getGPUData("assets/coral/coral_14.obj");
 
+    MeshGPU coral1mesh = uploadToGPU(coral1);
+    MeshGPU coral2mesh = uploadToGPU(coral2);
+    MeshGPU coral3mesh = uploadToGPU(coral3);
+    MeshGPU coral4mesh = uploadToGPU(coral4);
+    MeshGPU coral5mesh = uploadToGPU(coral5);
+    MeshGPU coral6mesh = uploadToGPU(coral6);
+    MeshGPU coral7mesh = uploadToGPU(coral7);
+    MeshGPU coral8mesh = uploadToGPU(coral8);
+    MeshGPU coral9mesh = uploadToGPU(coral9);
+    MeshGPU coral10mesh = uploadToGPU(coral10);
+    MeshGPU coral11mesh = uploadToGPU(coral11);
+    MeshGPU coral12mesh = uploadToGPU(coral12);
+    MeshGPU coral13mesh = uploadToGPU(coral13);
+    MeshGPU coral14mesh = uploadToGPU(coral14);
 }
