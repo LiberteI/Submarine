@@ -21,8 +21,6 @@ GLint stackCount = 60;
 GLint oceanBottomRadius = 1500;
 GLdouble oceanBottomPos = -500;
 
-
-
 void drawSubmarine(){
     initialiseSubmarineMaterial();
     glPushMatrix();
@@ -122,13 +120,7 @@ void drawCylinder(){
     glPopMatrix();
 }
 
-// called every frame
-void drawOceanSurface(){
-    if(oceanShaderProgram == 0){
-        return;
-    }
-    // bind shader
-    glUseProgram(oceanShaderProgram);
+void updateOceanShader(){
     // get GLSL variables
     GLint uFrequency = glGetUniformLocation(oceanShaderProgram, "frequency");
     GLint uWaveAmplitude = glGetUniformLocation(oceanShaderProgram, "waveAmplitude");
@@ -138,19 +130,6 @@ void drawOceanSurface(){
     glUniform1f(uWaveAmplitude, 60.0f);
     glUniform1f(uWaveSpeed, 4.0f);
 
-    glPushMatrix();
-    glTranslatef(0, 720.0f, 0);
-    
-    // start record VAO
-    glBindVertexArrayAPPLE(VAO);
-    
-    glDrawElements(GL_TRIANGLES, oceanSurfaceIndices.size(), GL_UNSIGNED_INT, 0);
-
-    // restore state so fixed-function drawing continues to work
-    glBindVertexArrayAPPLE(0);
-
-    glPopMatrix();
-
     // GLUT expects the enum; divide after retrieving milliseconds
     // get time
     float curTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
@@ -158,11 +137,31 @@ void drawOceanSurface(){
     GLint uCurTime = glGetUniformLocation(oceanShaderProgram, "curTime");
     // push uniform curTime
     glUniform1f(uCurTime, curTime);
+}
+// called every frame
+void drawOceanSurface(){
+    if(oceanShaderProgram == 0){
+        return;
+    }
+    // bind shader
+    glUseProgram(oceanShaderProgram);
+    
+    updateOceanShader();
+
+    glPushMatrix();
+    glTranslatef(0, 720.0f, 0);
+    
+    // start record VAO
+    glBindVertexArrayAPPLE(VAO);
+    glDrawElements(GL_TRIANGLES, oceanSurfaceIndices.size(), GL_UNSIGNED_INT, 0);
+    // restore state so fixed-function drawing continues to work
+    glBindVertexArrayAPPLE(0);
+
+    glPopMatrix();
+
     // unuse Program
     glUseProgram(0);
 }
-
-
 
 void drawCoral(const MeshGPU& coral, const std::array<GLfloat, 2> pos){
     glPushMatrix();

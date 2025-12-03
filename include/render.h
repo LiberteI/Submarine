@@ -11,7 +11,6 @@ void drawOceanSurface();
 
 void drawCorals();
 
-
 extern GLUquadric* quad;
 
 extern GLint sliceCount;

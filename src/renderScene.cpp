@@ -57,17 +57,22 @@ void myUpdate(){
     glutPostRedisplay();
 }
 
-void myDisplay(){
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glLoadIdentity();
+void setUpCamera(){
     // glu look at : camera pos {x,y,z}, look at{x,y,z}, up pos{x,y,z}
     gluLookAt(currentCamPos[0], currentCamPos[1], currentCamPos[2],
               submarinCurrentPos[0], submarinCurrentPos[1], submarinCurrentPos[2], 
               0, 1, 0);
+}
 
+void myDisplay(){
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glLoadIdentity();
+    
     glLightfv(GL_LIGHT0, GL_POSITION, sunlightDir);
 
+    setUpCamera();
+    
     drawOriginDebugger();
     
     drawOceanSurface();
