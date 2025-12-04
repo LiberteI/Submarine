@@ -242,7 +242,7 @@ void updateFishShader(const FishData& data){
     // get time
     float curTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
     // get Uniform time
-    GLint uCurTime = glGetUniformLocation(fishShaderProgram, "uTime");
+    GLint uCurTime = glGetUniformLocation(fishShaderProgram, "uCurTime");
     // push uniform curTime
     glUniform1f(uCurTime, curTime);
 }
@@ -266,6 +266,7 @@ void drawFish(MeshGPU fish, const FishData& data){
 }
 
 void drawFishes(){
+    printf("executed\n");
     FishData fish1Data;
     fish1Data.radius = 500.0f;
     fish1Data.speed = 100.0f;

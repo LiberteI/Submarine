@@ -1,6 +1,7 @@
 #version 120
-varying vec3 vNormal;
+varying vec3 vWorldPos;
 
 void main(){
-    gl_FragColor = vec4(1,1,1, 1.0);
+    // simple flat white; adjust as needed
+    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
 }
