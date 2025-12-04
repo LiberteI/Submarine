@@ -13,6 +13,7 @@
 #include "../include/helper.h"
 #include "../include/oceanSurface.h"
 #include "../include/coral.h"
+#include "../include/fish.h"
 GLUquadric* quad;
 
 GLint sliceCount = 60;
@@ -219,3 +220,4 @@ void drawCorals(){
     drawCoral(coralMesh13, coralPoses[13]);
     drawCoral(coralMesh14, coralPoses[14]);
 }
+
