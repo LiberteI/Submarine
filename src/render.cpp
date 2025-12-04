@@ -153,6 +153,7 @@ void updateOceanShader(){
     glUniform3f(uMatSpecular, 0.6f, 0.6f, 0.6f);
     glUniform1f(uMatShininess, 64.0f);
 }
+
 // called every frame
 void drawOceanSurface(){
     if(oceanShaderProgram == 0){

@@ -26,5 +26,5 @@ void main() {
    vec3 color = ambient + matDiffuse * lightColor * diff;
 
    // translucent water
-   gl_FragColor = vec4(color, 0.45);
+   gl_FragColor = vec4(color, 0.5);
 }

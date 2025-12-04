@@ -82,6 +82,8 @@ void initialiseGlobalStates(){
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     // use texture
     glEnable(GL_TEXTURE_2D);
+    // set clear color to a sky/water backdrop so transparent surface stays bright
+    glClearColor(0, 0.45f, 0.75f, 1.0f);
 }
 
 void initialiseFog(){
