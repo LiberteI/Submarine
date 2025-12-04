@@ -273,10 +273,18 @@ void drawFish(MeshGPU fish, const FishData& data){
 void drawFishes(){
     // printf("executed\n");
     FishData fish1Data;
+    // specify fish's orbit
     fish1Data.radius = 500.0f;
     fish1Data.speed = 0.5f;
     fish1Data.center[0] = 0.0f;
     fish1Data.center[1] = 0.0f;
     fish1Data.center[2] = 0.0f;
+    // specify lighting (sunlight direction) and material (blue)
+    fish1Data.lighting[0] = 0.2f;  // x
+    fish1Data.lighting[1] = -1.0f; // y (coming from above)
+    fish1Data.lighting[2] = 0.1f;  // z
+    fish1Data.diffuseColor[0] = 0.15f;
+    fish1Data.diffuseColor[1] = 0.35f;
+    fish1Data.diffuseColor[2] = 0.9f;
     drawFish(fish1, fish1Data);
 }
