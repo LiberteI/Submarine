@@ -221,3 +221,13 @@ void drawCorals(){
     drawCoral(coralMesh14, coralPoses[14]);
 }
 
+void drawFish(MeshGPU fish){
+    glBindVertexArrayAPPLE(fish.VAO);
+    glDrawElements(GL_TRIANGLES, fish.indexCount, GL_UNSIGNED_INT, 0);
+    glBindVertexArrayAPPLE(0);
+}
+
+void drawFishes(){
+    // printf("reached\n");
+    drawFish(fish1);
+}

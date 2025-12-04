@@ -18,3 +18,5 @@ extern GLint stackCount;
 
 extern GLint oceanBottomRadius;
 
+void drawFishes();
+

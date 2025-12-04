@@ -85,6 +85,7 @@ void myDisplay(){
 
     drawCorals();
 
+    drawFishes();
     // --- untextured obj
     glDisable(GL_TEXTURE_2D);
     drawSubmarine();

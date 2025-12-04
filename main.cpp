@@ -18,6 +18,7 @@
 #include "include/helper.h"
 #include "include/submarine.h"
 #include "include/coral.h"
+#include "include/fish.h"
 
 void registerInputFuncs(){
     // dump of input functions
@@ -147,6 +148,8 @@ void initialiseSceneResources(){
     loadCorals();
 
     initialiseCoralPos();
+
+    loadFish();
 }
 
 void initialiseCallbackRegistrations(){
