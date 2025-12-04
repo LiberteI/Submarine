@@ -271,20 +271,36 @@ void drawFish(MeshGPU fish, const FishData& data){
 }
 
 void drawFishes(){
-    // printf("executed\n");
-    FishData fish1Data;
-    // specify fish's orbit
-    fish1Data.radius = 500.0f;
-    fish1Data.speed = 0.5f;
-    fish1Data.center[0] = 0.0f;
-    fish1Data.center[1] = 0.0f;
-    fish1Data.center[2] = 0.0f;
-    // specify lighting (sunlight direction) and material (blue)
-    fish1Data.lighting[0] = 0.2f;  // x
-    fish1Data.lighting[1] = -1.0f; // y (coming from above)
-    fish1Data.lighting[2] = 0.1f;  // z
-    fish1Data.diffuseColor[0] = 0.15f;
-    fish1Data.diffuseColor[1] = 0.35f;
-    fish1Data.diffuseColor[2] = 0.9f;
-    drawFish(fish1, fish1Data);
+    // school of fish: one mesh, multiple orbits/materials
+    std::array<FishData, 20> fishSchool{};
+
+    // base lighting (sunlight) and material (blue)
+    const GLfloat lightDir[3] = {0.2f, -1.0f, 0.1f};
+    const GLfloat color[3] = {0.15f, 0.35f, 0.9f};
+
+    // populate fish data (vary XZ center and Y height)
+    fishSchool[0]  = {500.0f, 0.50f, {   0.0f,  10.0f,    0.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[1]  = {420.0f, 0.60f, {-200.0f, -15.0f,  150.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[2]  = {380.0f, 0.45f, { 180.0f,  25.0f, -120.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[3]  = {550.0f, 0.70f, {  60.0f,  -5.0f,  260.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[4]  = {300.0f, 0.80f, {-260.0f,  35.0f, -140.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[5]  = {470.0f, 0.55f, { 240.0f, -20.0f,   90.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[6]  = {360.0f, 0.65f, {-120.0f,  18.0f,  260.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[7]  = {520.0f, 0.40f, { 320.0f,  -8.0f,  -80.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[8]  = {410.0f, 0.75f, { -80.0f,  30.0f, -260.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[9]  = {340.0f, 0.50f, { 140.0f, -25.0f,  180.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[10] = {290.0f, 0.90f, {-180.0f,   5.0f,   40.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[11] = {430.0f, 0.58f, { 210.0f, -12.0f, -210.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[12] = {310.0f, 0.72f, {-300.0f,  22.0f,   90.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[13] = {390.0f, 0.48f, {  90.0f,  14.0f, -190.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[14] = {560.0f, 0.66f, {-150.0f, -18.0f,  230.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[15] = {330.0f, 0.82f, { 260.0f,  28.0f,  -60.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[16] = {450.0f, 0.62f, {-220.0f,  -6.0f, -240.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[17] = {370.0f, 0.78f, { 170.0f,  32.0f,  120.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[18] = {510.0f, 0.44f, { -60.0f, -10.0f,  280.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+    fishSchool[19] = {305.0f, 0.88f, { 110.0f,  16.0f, -150.0f}, {lightDir[0], lightDir[1], lightDir[2]}, {color[0], color[1], color[2]}};
+
+    for(const auto& data : fishSchool){
+        drawFish(fish, data);
+    }
 }

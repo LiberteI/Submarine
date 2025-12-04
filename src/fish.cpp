@@ -10,8 +10,7 @@
 std::vector<GLfloat> fishVertices;
 std::vector<GLuint> fishMesh;
 
-MeshGPU fish1;
-MeshGPU fish2;
+MeshGPU fish;
 
 // create single fish's vertices
 void generateFishVertices(){
@@ -132,8 +131,6 @@ MeshGPU uploadFishToGPU(const GPUdata& dataToUpload){
 }
 
 void loadFish(){
-    GPUdata fishGPUdata1 = buildFishGPUdata();
-    GPUdata fishGPUdata2 = buildFishGPUdata();
-    fish1 = uploadFishToGPU(fishGPUdata1);
-    fish2 = uploadFishToGPU(fishGPUdata2);
+    GPUdata fishGPUdata = buildFishGPUdata();
+    fish = uploadFishToGPU(fishGPUdata);
 }

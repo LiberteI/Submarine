@@ -4,7 +4,6 @@
 
 MeshGPU uploadFishToGPU(const GPUdata& dataToUpload);
 
-extern MeshGPU fish1;
-extern MeshGPU fish2;
+extern MeshGPU fish;
 
 void loadFish();
