@@ -488,7 +488,7 @@ void describeVBOEBOToGPU(const GPUdata& dataToUpload, MeshGPU& mesh){
     );
     glEnableVertexAttribArray(1);
 
-    // end state recording
+    // end state recwording
     glBindVertexArrayAPPLE(0);
 
     // set index count
