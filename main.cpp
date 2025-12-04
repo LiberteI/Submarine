@@ -8,6 +8,7 @@
 #include <sstream>
 #include <array>
 #include <string>
+#include <filesystem>
 #include "include/input.h"
 #include "include/render.h"
 #include "include/renderScene.h"
@@ -19,6 +20,8 @@
 #include "include/submarine.h"
 #include "include/coral.h"
 #include "include/fish.h"
+
+
 
 void registerInputFuncs(){
     // dump of input functions
@@ -173,6 +176,7 @@ void initialiseGLEW(){
 
 // i try to let main keep the same level of abstraction and i think main is self-explainary
 int main(int argc, char** argv){
+    setWorkingDirectoryToExecutablePath(argv[0]);
     // intialise GLUT, playmode, window
     glutInit(&argc, argv);
     initialiseBuffer();

@@ -516,3 +516,24 @@ GLfloat getRandomCoralPos(){
 
     return dist(gen);
 }
+
+// move process working directory next to the executable so relative assets resolve both in VS Code and Finder.
+bool setWorkingDirectoryToExecutablePath(const char* executableArg){
+    namespace fs = std::filesystem;
+
+    std::error_code error;
+    fs::path executablePath = fs::weakly_canonical(fs::path(executableArg), error);
+    if(error){
+        printf("Could not resolve executable path (%s)\n", error.message().c_str());
+        return false;
+    }
+
+    fs::path executableDir = executablePath.parent_path();
+    std::string executableDirString = executableDir.string();
+    fs::current_path(executableDir, error);
+    if(error){
+        printf("Could not change working directory to %s (%s)\n", executableDirString.c_str(), error.message().c_str());
+        return false;
+    }
+    return true;
+}

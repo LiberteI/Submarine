@@ -34,3 +34,4 @@ void uploadSurfaceToGPU();
 std::array<GLint, 2> parseToken(std::string token);
 void drawOriginDebugger();
 MeshGPU uploadToGPU(const GPUdata& dataToUpload);
+bool setWorkingDirectoryToExecutablePath(const char* executableArg);
