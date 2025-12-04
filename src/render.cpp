@@ -226,6 +226,8 @@ struct FishData{
     GLfloat radius = 0.0f;
     GLfloat speed = 0.0f;
     GLfloat center[3] = {0.0f, 0.0f, 0.0f};
+    GLfloat lighting[3] = {0.0f, 0.0f, 0.0f};
+    GLfloat diffuseColor[3] = {0.0f, 0.0f, 0.0f};
 };
 
 void updateFishShader(const FishData& data){
@@ -233,11 +235,14 @@ void updateFishShader(const FishData& data){
     GLint uOrbitRadius = glGetUniformLocation(fishShaderProgram, "uOrbitRadius");
     GLint uOrbitSpeed = glGetUniformLocation(fishShaderProgram, "uOrbitSpeed");
     GLint uOrbitCenter = glGetUniformLocation(fishShaderProgram, "uOrbitCenter");
+    GLint uLightDir = glGetUniformLocation(fishShaderProgram, "uLightDir");
+    GLint uDiffuseColor = glGetUniformLocation(fishShaderProgram, "uDiffuseColor");
     // push attributes to GLSL
     glUniform1f(uOrbitRadius, data.radius);
     glUniform1f(uOrbitSpeed, data.speed);
     glUniform3fv(uOrbitCenter, 1, data.center);
-
+    glUniform3fv(uLightDir, 1, data.lighting);
+    glUniform3fv(uDiffuseColor, 1, data.diffuseColor);
     // GLUT expects the enum; divide after retrieving milliseconds
     // get time
     float curTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
