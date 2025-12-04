@@ -10,3 +10,4 @@ GLuint sandTexture;
 
 GLuint oceanShaderProgram;
 GLuint coralShaderProgram;
+GLuint fishShaderProgram;

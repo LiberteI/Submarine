@@ -198,6 +198,7 @@ void drawCoral(const MeshGPU& coral, const std::array<GLfloat, 2> pos){
     glBindVertexArrayAPPLE(coral.VAO);
     glDrawElements(GL_TRIANGLES, coral.indexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArrayAPPLE(0);
+
     glPopMatrix();
 
     // unuse program
@@ -221,13 +222,55 @@ void drawCorals(){
     drawCoral(coralMesh14, coralPoses[14]);
 }
 
-void drawFish(MeshGPU fish){
+struct FishData{
+    GLfloat radius = 0.0f;
+    GLfloat speed = 0.0f;
+    GLfloat center[3] = {0.0f, 0.0f, 0.0f};
+};
+
+void updateFishShader(const FishData& data){
+    // get GLSL variables
+    GLint uOrbitRadius = glGetUniformLocation(fishShaderProgram, "uOrbitRadius");
+    GLint uOrbitSpeed = glGetUniformLocation(fishShaderProgram, "uOrbitSpeed");
+    GLint uOrbitCenter = glGetUniformLocation(fishShaderProgram, "uOrbitCenter");
+    // push attributes to GLSL
+    glUniform1f(uOrbitRadius, data.radius);
+    glUniform1f(uOrbitSpeed, data.speed);
+    glUniform3fv(uOrbitCenter, 1, data.center);
+
+    // GLUT expects the enum; divide after retrieving milliseconds
+    // get time
+    float curTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+    // get Uniform time
+    GLint uCurTime = glGetUniformLocation(fishShaderProgram, "uTime");
+    // push uniform curTime
+    glUniform1f(uCurTime, curTime);
+}
+
+void drawFish(MeshGPU fish, const FishData& data){
+    if(fishShaderProgram == 0){
+        printf("fish shader is not loaded\n");
+        return;
+    }
+
+    // bind shader
+    glUseProgram(fishShaderProgram);
+
+    updateFishShader(data);
+
     glBindVertexArrayAPPLE(fish.VAO);
     glDrawElements(GL_TRIANGLES, fish.indexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArrayAPPLE(0);
+
+    glUseProgram(0);
 }
 
 void drawFishes(){
-    // printf("reached\n");
-    drawFish(fish1);
+    FishData fish1Data;
+    fish1Data.radius = 500.0f;
+    fish1Data.speed = 100.0f;
+    fish1Data.center[0] = 0.0f;
+    fish1Data.center[1] = 0.0f;
+    fish1Data.center[2] = 0.0f;
+    drawFish(fish1, fish1Data);
 }

@@ -123,6 +123,10 @@ void loadOceanSurfaceShader(){
     }
 }
 
+void loadFishShader(){
+    fishShaderProgram = createProgram("glsl/fish.vert", "glsl/fish.frag");
+}
+
 void loadCoralShader(){
     coralShaderProgram = createProgram("glsl/coral.vert", "glsl/coral.frag");
 }
@@ -145,11 +149,14 @@ void initialiseSceneResources(){
 
     loadCoralShader();
 
+    loadFishShader();
+
     loadCorals();
 
     initialiseCoralPos();
 
     loadFish();
+
 }
 
 void initialiseCallbackRegistrations(){
