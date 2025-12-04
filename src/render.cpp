@@ -266,10 +266,10 @@ void drawFish(MeshGPU fish, const FishData& data){
 }
 
 void drawFishes(){
-    printf("executed\n");
+    // printf("executed\n");
     FishData fish1Data;
     fish1Data.radius = 500.0f;
-    fish1Data.speed = 100.0f;
+    fish1Data.speed = 0.5f;
     fish1Data.center[0] = 0.0f;
     fish1Data.center[1] = 0.0f;
     fish1Data.center[2] = 0.0f;
