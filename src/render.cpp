@@ -179,20 +179,6 @@ void drawOceanSurface(){
     glUseProgram(0);
 }
 
-void updateCoralShader(){
-    GLint uLightPos = glGetUniformLocation(oceanShaderProgram, "lightPos");
-    GLint uLightColor = glGetUniformLocation(oceanShaderProgram, "lightColor");
-    GLint uMatDiffuse = glGetUniformLocation(oceanShaderProgram, "matDiffuse");
-    GLint uMatSpecular = glGetUniformLocation(oceanShaderProgram, "matSpecular");
-    GLint uMatShininess = glGetUniformLocation(oceanShaderProgram, "matShininess");
-    glUniform3f(uLightPos,  600.0f, 300.0f, 200.0f);  // e.g. sun above water
-    glUniform3f(uLightColor, 1.0f, 1.0f, 0.95f);
-
-    // material tuning
-    glUniform3f(uMatDiffuse,  0.0f, 0.3f, 0.8f);  // underwater teal
-    glUniform3f(uMatSpecular, 0.6f, 0.6f, 0.6f);
-    glUniform1f(uMatShininess, 64.0f);
-}
 
 void drawCoral(const MeshGPU& coral, const std::array<GLfloat, 2> pos){
     if(coralShaderProgram == 0){
@@ -201,8 +187,6 @@ void drawCoral(const MeshGPU& coral, const std::array<GLfloat, 2> pos){
     }
     // bind shader
     glUseProgram(coralShaderProgram);
-
-    updateCoralShader();
 
     glPushMatrix();
     // scale coral up
