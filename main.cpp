@@ -109,7 +109,7 @@ void loadTextures(){
 
 }
 
-void loadOceanSurface(){
+void loadOceanSurfaceShader(){
     // compile glsl programs
     oceanShaderProgram = createProgram("glsl/ocean.vert", "glsl/ocean.frag");
     
@@ -120,6 +120,10 @@ void loadOceanSurface(){
     else{
         printf("Ocean shader failed to compile/link, falling back to fixed pipeline rendering.\n");
     }
+}
+
+void loadCoralShader(){
+    coralShaderProgram = createProgram("glsl/coral.vert", "glsl/coral.frag");
 }
 
 void initialiseSceneResources(){
@@ -136,7 +140,9 @@ void initialiseSceneResources(){
 
     loadTextures();
 
-    loadOceanSurface();
+    loadOceanSurfaceShader();
+
+    loadCoralShader();
 
     loadCorals();
 
